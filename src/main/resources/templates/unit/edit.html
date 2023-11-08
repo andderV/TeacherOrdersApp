@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница редактирования</title>
+</head>
+<body>
+<form th:method="PATCH" th:action="@{/units/{id}(id=${unit.getMeasureUnitId()})}"
+      th:object="${unit}">
+    <label for="name">Введите название единицы измерения: </label>
+    <input type="text" th:field="*{measureUnitName}" id="name">
+    <div style="color: red" th:if="${#fields.hasErrors('measureUnitName')}" th:errors="*{measureUnitName}">Name error</div>
+    <br/>
+    <input type="submit" value="Редактировать!">
+</form>
+</body>
+</html>

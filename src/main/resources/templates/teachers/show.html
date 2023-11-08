@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница преподавателя</title>
+</head>
+<body>
+<a th:text="${teacher.getTeacherName()} + ', ' + ${teacher.getEmail()}+ ', ' + ${teacher.getPhoneNumber()}"></a>
+<br/>
+<div th:if="${!teacher.getOrdersList().isEmpty()}">
+    <hr/>
+    <h3>Заказы:</h3>
+    <div th:each="order: ${orders}">
+        <span th:text="${order.getDateOrder()} + ', ' + ${order.ordersGroseriesList} + ', ' + ${order.getOrdersMeasureUnitList()}"
+        >User</span>
+    </div>
+</div>
+<br/>
+<div th:if="${teacher.getOrdersList().isEmpty()}">У преподавателя нет ни одного заказа</div>
+
+<hr/>
+
+<form th:method="GET" th:action="@{/teachers/{id}/edit(id=${teacher.getTeacherId()})}">
+
+    <input type="submit" value="Редактировать">
+</form>
+
+<form th:method="DELETE" th:action="@{/teachers/{id}(id=${teacher.getTeacherId()})}">
+    <input type="submit" value="Удалить"/>
+</form>
+</body>
+</html>

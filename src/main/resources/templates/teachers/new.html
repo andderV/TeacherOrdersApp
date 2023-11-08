@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Teacher</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/teachers}" th:object="${teacher}">
+    <label for="name">Введите ФИО: </label>
+    <input type="text" th:field="*{teacherName}" id="name">
+    <div style="color: red" th:if="${#fields.hasErrors('teacherName')}" th:errors="*{teacherName}">Name error</div>
+    <br/>
+    <label for="email">Введите электронную почту:</label>
+    <input type="text" th:field="*{email}" id="email">
+    <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name error</div>
+    <br/>
+    <label for="phoneNumber">Введите номер телефона:</label>
+    <input type="text" th:field="*{phoneNumber}" id="phoneNumber">
+    <div style="color: red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Name error</div>
+    <br/>
+    <input type="submit" value="Create!">
+</form>
+</body>
+</html>

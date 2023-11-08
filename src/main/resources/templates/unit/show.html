@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница единицы измерения</title>
+</head>
+<body>
+<a th:text="${unit.getMeasureUnitName()}"></a>
+<br/>
+<div th:if="${!units.isEmpty()}">
+    <hr/>
+    <h3>Заказы:</h3>
+    <div th:each="order: ${units}">
+        <span th:text="${order.getDateOrder()} + ', ' + ${order.ordersGroseriesList} + ', ' + ${order.getOrdersMeasureUnitList()}"
+        >User</span>
+    </div>
+</div>
+<br/>
+<div th:if="${units.isEmpty()}">Этой единицы измерения нет ни в одном заказе</div>
+
+<hr/>
+
+<form th:method="GET" th:action="@{/units/{id}/edit(id=${unit.getMeasureUnitId()})}">
+
+    <input type="submit" value="Редактировать">
+</form>
+
+<form th:method="DELETE" th:action="@{/units/{id}(id=${unit.getMeasureUnitId()})}">
+    <input type="submit" value="Удалить"/>
+</form>
+</body>
+</html>

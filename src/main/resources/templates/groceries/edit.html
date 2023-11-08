@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница редактирования</title>
+</head>
+<body>
+<form th:method="PATCH" th:action="@{/groceries/{id}(id=${product.getId()})}"
+      th:object="${product}">
+    <label for="name">Введите наименование продукта: </label>
+    <input type="text" th:field="*{productName}" id="name">
+    <div style="color: red" th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}">Name error</div>
+    <br/>
+    <label for="unit">Выберите единицу измерения:</label>
+    <select th:object="${product.getMeasureUnit()}" th:field="*{product.getMeasureUnit().measureUnitId}" id="unit">
+        <option th:each="unit:${units}" th:value="${unit.getMeasureUnitId()}"
+                th:text="${unit.getMeasureUnitName()}"></option>
+    </select>
+    <input type="submit" value="Редактировать!">
+</form>
+</body>
+</html>

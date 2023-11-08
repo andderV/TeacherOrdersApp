@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница продукта</title>
+</head>
+<body>
+<a th:text="${product.getProductName()} + ' ' + ${product.getMeasureUnit().getMeasureUnitName()}"></a>
+<br/>
+<div th:if="${!orders.isEmpty()}">
+    <hr/>
+    <h3>Заказы:</h3>
+    <div th:each="order: ${orders}">
+        <span th:text="${order.getDateOrder()} + ', ' + ${order.ordersGroseriesList}"
+        >User</span>
+    </div>
+</div>
+<br/>
+<div th:if="${orders.isEmpty()}">Этого продукта нет ни в одном заказе</div>
+
+<hr/>
+
+<form th:method="GET" th:action="@{/groceries/{id}/edit(id=${product.getId()})}">
+
+    <input type="submit" value="Редактировать">
+</form>
+
+<form th:method="DELETE" th:action="@{/groceries/{id}(id=${product.getId()})}">
+    <input type="submit" value="Удалить"/>
+</form>
+</body>
+</html>

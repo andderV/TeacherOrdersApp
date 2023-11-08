@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All units</title>
+</head>
+<body>
+<div th:each="unit:${measureUnit}">
+<a th:href="@{/units/{id}(id=${unit.getMeasureUnitId()})}"
+   th:text="${unit.getMeasureUnitName()}">Measure Unit</a>
+</div>
+<br/>
+<hr/>
+
+<a href="units/new">Добавить новую единицу измерения</a>
+</body>
+</html>
