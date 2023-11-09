@@ -32,8 +32,17 @@ public class ProductController {
     }
 
     @GetMapping
-    public String index(Model model) {
-        model.addAttribute("groceries", groceriesService.findAll());
+    public String index(@RequestParam(value = "page", required = false) Integer page,
+                        @RequestParam(value = "product_per_page", required = false) Integer productPerPage,
+                        @RequestParam(value = "sort_by_product_name", required = false) boolean sortByProductName,
+                        Model model) {
+        if (page == null || productPerPage == null){
+            model.addAttribute("groceries", groceriesService.findAll(sortByProductName));
+
+        } else {
+            model.addAttribute("groceries", groceriesService
+                    .findAllWithPaginationAndSorting(page, productPerPage, sortByProductName));
+        }
         return "groceries/index";
     }
 

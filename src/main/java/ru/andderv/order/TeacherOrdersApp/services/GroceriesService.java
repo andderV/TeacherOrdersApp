@@ -2,17 +2,16 @@ package ru.andderv.order.TeacherOrdersApp.services;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.andderv.order.TeacherOrdersApp.models.Groceries;
-import ru.andderv.order.TeacherOrdersApp.models.MeasureUnit;
 import ru.andderv.order.TeacherOrdersApp.models.Orders;
 import ru.andderv.order.TeacherOrdersApp.repositories.GroceriesRepository;
-import ru.andderv.order.TeacherOrdersApp.repositories.MeasureUnitRepository;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -30,8 +29,21 @@ public class GroceriesService {
         this.groceriesRepository = groceriesRepository;
     }
 
-    public List<Groceries> findAll() {
-        return groceriesRepository.findAll();
+    public List<Groceries> findAll(boolean sortByProductName) {
+        if (sortByProductName) {
+            return groceriesRepository.findAll(Sort.by("productName"));
+        } else {
+            return groceriesRepository.findAll();
+        }
+    }
+
+    public List<Groceries> findAllWithPaginationAndSorting(int pageNumber, int pageSize, boolean sortByProductName) {
+        if (sortByProductName) {
+            return groceriesRepository.findAll(PageRequest.of(pageNumber, pageSize, Sort.by("productName"))).getContent();
+        } else {
+            return groceriesRepository.findAll(PageRequest.of(pageNumber, pageSize)).getContent();
+        }
+
     }
 
     public Groceries findById(int id) {
@@ -54,7 +66,7 @@ public class GroceriesService {
         groceriesRepository.deleteById(id);
     }
 
-    public Groceries findProductByProductName(String productName){
+    public Groceries findProductByProductName(String productName) {
         Optional<Groceries> product = groceriesRepository.findProductByProductName(productName);
         return product.orElse(null);
     }

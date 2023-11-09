@@ -7,7 +7,7 @@
 <body>
 <div th:each="product:${groceries}">
 <a th:href="@{/groceries/{id}(id=${product.getId()})}"
-   th:text="${product.getProductName()}">Product</a>
+   th:text="${product.getProductName()} + ', ' + ${product.getMeasureUnit().getMeasureUnitName()}">Product</a>
 </div>
 <br/>
 <hr/>
