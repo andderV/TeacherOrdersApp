@@ -13,7 +13,7 @@
     <div style="color: red" th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}">Name error</div>
     <br/>
     <label for="unit">Выберите единицу измерения:</label>
-    <select th:object="${product.getMeasureUnit()}" th:field="*{product.getMeasureUnit().measureUnitId}" id="unit">
+    <select th:object="${unit}" th:field="*{measureUnitId}" id="unit">
         <option th:each="unit:${units}" th:value="${unit.getMeasureUnitId()}"
                 th:text="${unit.getMeasureUnitName()}"></option>
     </select>

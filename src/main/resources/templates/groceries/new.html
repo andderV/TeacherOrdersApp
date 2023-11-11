@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>New Product</title>
+    <title>Новый продукт</title>
 </head>
 <body>
 <form th:method="POST" th:action="@{/groceries}" th:object="${product}">
@@ -16,7 +16,7 @@
         <option th:each="unit:${units}" th:value="${unit.getMeasureUnitId()}"
                 th:text="${unit.getMeasureUnitName()}"></option>
     </select>
-    <input type="submit" value="Create!">
+    <input type="submit" value="Создать!">
 </form>
 </body>
 </html>

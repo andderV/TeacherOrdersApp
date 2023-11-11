@@ -11,7 +11,7 @@
     <hr/>
     <h3>Заказы:</h3>
     <div th:each="order: ${orders}">
-        <span th:text="${order.getDateOrder()} + ', ' + ${order.ordersGroseriesList} + ', ' + ${order.getOrdersMeasureUnitList()}"
+        <span th:text="${order.getDateOrder()} + ', ' + ${order.ordersGroseriesList}"
         >User</span>
     </div>
 </div>

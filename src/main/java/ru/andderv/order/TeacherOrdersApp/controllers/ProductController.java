@@ -81,6 +81,9 @@ public class ProductController {
     public String edit(Model model, @PathVariable("id") int id) {
         model.addAttribute("product", groceriesService.findById(id));
         model.addAttribute("units", unitService.findAll());
+        model.addAttribute("unit",
+                unitService.findMeasureUnitByMeasureUnitName(groceriesService.findById(id)
+                        .getMeasureUnit().getMeasureUnitName()));
         return "groceries/edit";
     }
 
@@ -94,7 +97,7 @@ public class ProductController {
             return "groceries/edit";
         }
 
-
+        product.setMeasureUnit(unit);
         groceriesService.update(id, product);
         return "redirect:/groceries";
     }
