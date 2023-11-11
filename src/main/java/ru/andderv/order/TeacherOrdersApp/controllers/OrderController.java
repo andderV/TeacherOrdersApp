@@ -7,7 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.andderv.order.TeacherOrdersApp.models.Orders;
+import ru.andderv.order.TeacherOrdersApp.models.Teacher;
 import ru.andderv.order.TeacherOrdersApp.services.OrderService;
+import ru.andderv.order.TeacherOrdersApp.services.TeachersService;
 
 /**
  * @author andderV
@@ -18,10 +20,12 @@ import ru.andderv.order.TeacherOrdersApp.services.OrderService;
 @RequestMapping("/orders")
 public class OrderController {
     private final OrderService orderService;
+    private final TeachersService teachersService;
 
     @Autowired
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, TeachersService teachersService) {
         this.orderService = orderService;
+        this.teachersService = teachersService;
     }
 
     @GetMapping
@@ -37,7 +41,9 @@ public class OrderController {
     }
 
     @GetMapping("/new")
-    public String newOrder(@ModelAttribute("order") Orders order) {
+    public String newOrder(@ModelAttribute("order") Orders order, @ModelAttribute("owner")Teacher teacher,
+                           Model model) {
+        model.addAttribute("teachers", teachersService.findAll());
         return "order/new";
     }
 

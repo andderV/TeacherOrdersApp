@@ -3,14 +3,20 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Новая единица измерения</title>
+    <title>Новый заказ</title>
 </head>
 <body>
-<form th:method="POST" th:action="@{/units}" th:object="${unit}">
-    <label for="name">Введите название единицы измерения: </label>
-    <input type="text" th:field="*{measureUnitName}" id="name">
-    <div style="color: red" th:if="${#fields.hasErrors('measureUnitName')}" th:errors="*{measureUnitName}">Name error</div>
+<form th:method="POST" th:action="@{/orders}" th:object="${order}">
+    <label for="date">Выберите дату: </label>
+    <input type="date" th:field="*{dateOrder}" id="date">
+    <div style="color: red" th:if="${#fields.hasErrors('dateOrder')}" th:errors="*{dateOrder}">Date error</div>
     <br/>
+    <label for="teacher">Выберите преподавателя:</label>
+    <select th:object="${owner}" th:field="*{teacherId}" id="teacher">
+        <option th:each="teacher: ${teachers}" th:value="${teacher.teacherId}"
+                th:text="${teacher.teacherName}">
+        </option>
+    </select>
     <input type="submit" value="Создать!">
 </form>
 </body>

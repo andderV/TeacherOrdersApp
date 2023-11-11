@@ -2,30 +2,30 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Страница единицы измерения</title>
+    <title>Страница заказа</title>
 </head>
 <body>
-<a th:text="${unit.getMeasureUnitName()}"></a>
+<a th:text="${order.getDateOrder()} + ', ' + ${order.getOwner().getTeacherName()}"></a>
 <br/>
-<div th:if="${!units.isEmpty()}">
+<div th:if="${!order.getOrdersGroseriesList().isEmpty()}">
     <hr/>
     <h3>Продукты:</h3>
-    <div th:each="product: ${units}">
-        <span th:text="${product.getProductName()}"
-        >User</span>
+    <div th:each="product: ${order.getOrdersGroseriesList()}">
+        <span th:text="${product.getProductName()} + ' ' + ${product.measureUnit.getMeasureUnitName()}"
+        >Product</span>
     </div>
 </div>
 <br/>
-<div th:if="${units.isEmpty()}">Этой единицы измерения нет ни в одном продукте</div>
+<div th:if="${order.getOrdersGroseriesList().isEmpty()}">Этот заказ не содержит ни одного продукта</div>
 
 <hr/>
 
-<form th:method="GET" th:action="@{/units/{id}/edit(id=${unit.getMeasureUnitId()})}">
+<form th:method="GET" th:action="@{/order/{id}/edit(id=${order.getOrderId()})}">
 
     <input type="submit" value="Редактировать">
 </form>
 
-<form th:method="DELETE" th:action="@{/units/{id}(id=${unit.getMeasureUnitId()})}">
+<form th:method="DELETE" th:action="@{/order/{id}(id=${order.getOrderId()})}">
     <input type="submit" value="Удалить"/>
 </form>
 </body>
