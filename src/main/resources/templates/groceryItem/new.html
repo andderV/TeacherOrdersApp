@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
+    <title>Новый заказ</title>
+</head>
+<body>
+<!--<header th:insert="blocks/header :: header"></header>-->
+
+<form th:method="POST" th:action="@{/item}" th:object="${item}">
+    <label for="order">Выберите заказ:</label>
+    <select th:object="${order}" th:field="*{orderId}" id="order">
+        <option th:value="${order.orderId}" th:text="${order.getDateOrder()}"></option>
+    </select>
+    <label for="grocery">Выберите продукт:</label>
+    <select th:object="${product}" th:field="*{id}" id="grocery">
+        <option th:each="grocery:${groceries}" th:value="${grocery.id}"
+                th:text="${grocery.productName} + ' ' + ${grocery.measureUnit.measureUnitName}"></option>
+    </select>
+    <label for="quantity">Введите количество</label>
+    <input type="text" th:field="*{quantity}" id="quantity">
+    <div style="color: red" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}">Name error</div>
+    <input type="submit" value="Добавить">
+</form>
+<h3>Текущий заказ:</h3>
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Название продукта</th>
+        <th>Количество</th>
+        <th>Единица измерения</th>
+        <!--        <th>Дополнительная информация</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item :${fullListItem}">
+        <td th:text="${item.grocery.productName}"/>
+        <td th:text="${item.quantity}"/>
+        <td th:text="${item.grocery.measureUnit.measureUnitName}"/>
+    </tr>
+    </tbody>
+
+</table>
+
+<!--<div th:each="it:${fullListItem}">-->
+<!--    <span th:text="${it.grocery.productName} + ' ' + ${it.quantity} + ' '+ ${it.grocery.measureUnit.measureUnitName}"></span>-->
+<!--</div>-->
+
+<div>
+    <a th:href="@{/orders}">Закрыть корзину</a>
+</div>
+
+</body>
+</html>

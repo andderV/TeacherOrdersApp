@@ -3,23 +3,30 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
     <title>New Teacher</title>
 </head>
 <body>
-<form th:method="POST" th:action="@{/teachers}" th:object="${teacher}">
-    <label for="name">Введите ФИО: </label>
-    <input type="text" th:field="*{teacherName}" id="name">
-    <div style="color: red" th:if="${#fields.hasErrors('teacherName')}" th:errors="*{teacherName}">Name error</div>
-    <br/>
-    <label for="email">Введите электронную почту:</label>
-    <input type="text" th:field="*{email}" id="email">
-    <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name error</div>
-    <br/>
-    <label for="phoneNumber">Введите номер телефона:</label>
-    <input type="text" th:field="*{phoneNumber}" id="phoneNumber">
-    <div style="color: red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Name error</div>
-    <br/>
-    <input type="submit" value="Создать!">
-</form>
+<header th:insert="blocks/header :: header"></header>
+
+<div class="container mt-5 mb-2">
+    <form th:method="POST" th:action="@{/teachers}" th:object="${teacher}">
+        <label for="name">Введите ФИО: </label>
+        <input type="text" th:field="*{teacherName}" id="name" class="form-control">
+        <div style="color: red" th:if="${#fields.hasErrors('teacherName')}" th:errors="*{teacherName}">Name error</div>
+        <br/>
+        <label for="email">Введите электронную почту:</label>
+        <input type="text" th:field="*{email}" id="email" class="form-control">
+        <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name error</div>
+        <br/>
+        <label for="phoneNumber">Введите номер телефона:</label>
+        <input type="text" th:field="*{phoneNumber}" id="phoneNumber" class="form-control">
+        <div style="color: red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Name error</div>
+        <br/>
+        <button type="submit" class="btn btn-success">Добавить преподавателя</button>
+    </form>
+</div>
 </body>
 </html>

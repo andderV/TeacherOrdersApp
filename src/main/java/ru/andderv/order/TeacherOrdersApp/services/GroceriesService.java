@@ -2,7 +2,9 @@ package ru.andderv.order.TeacherOrdersApp.services;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +46,14 @@ public class GroceriesService {
             return groceriesRepository.findAll(PageRequest.of(pageNumber, pageSize)).getContent();
         }
 
+    }
+
+    public Page<Groceries> findAll(int pageNumber, int pageSize, boolean sortByProductName){
+        if (sortByProductName){
+            return groceriesRepository.findAll(PageRequest.of(pageNumber, pageSize, Sort.by("productName")));
+        } else {
+            return groceriesRepository.findAll(PageRequest.of(pageNumber, pageSize));
+        }
     }
 
     public Groceries findById(int id) {

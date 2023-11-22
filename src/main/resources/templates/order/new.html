@@ -17,6 +17,21 @@
                 th:text="${teacher.teacherName}">
         </option>
     </select>
+    <hr>
+    <br>
+    <br>
+<!--        <form th:method="POST" th:action="@{/orders/add}" th:object="${groceryItem}">-->
+<!--            <label for="grocery">Выберите продукт:</label>-->
+<!--            <select th:object="${product}" th:field="*{id}" id="grocery">-->
+<!--                <option th:each="grocery:${groceries}" th:value="${grocery.id}"-->
+<!--                        th:text="${grocery.productName} + ' ' + ${grocery.measureUnit.measureUnitName}"></option>-->
+<!--            </select>-->
+<!--            <label for="quantity">Введите количество</label>-->
+<!--            <input type="text" th:field="*{productId}" id="quantity">-->
+<!--            <input type="submit" value="Добавить">-->
+<!--        </form>-->
+<!--    <br>-->
+<!--    <br>-->
     <input type="submit" value="Создать!">
 </form>
 </body>

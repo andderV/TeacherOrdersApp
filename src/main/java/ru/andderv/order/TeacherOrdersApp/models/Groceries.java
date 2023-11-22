@@ -36,6 +36,9 @@ public class Groceries {
             inverseJoinColumns = @JoinColumn(name = "order_id"))
     private List<Orders> ordersGroceriesList;
 
+    @OneToMany(mappedBy = "grocery")
+    private List<GroceryItem>groceriesItem;
+
     @ManyToOne
     @JoinColumn(name = "measure_unit_id", referencedColumnName = "measure_unit_id")
     private MeasureUnit measureUnit;

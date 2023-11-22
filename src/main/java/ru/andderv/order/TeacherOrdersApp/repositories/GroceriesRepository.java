@@ -1,5 +1,7 @@
 package ru.andderv.order.TeacherOrdersApp.repositories;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.andderv.order.TeacherOrdersApp.models.Groceries;
@@ -14,6 +16,9 @@ import java.util.Optional;
  */
 @Repository
 public interface GroceriesRepository extends JpaRepository<Groceries, Integer> {
+
     Optional<Groceries> findProductByProductName(String productName);
+
+    Page<Groceries>findByProductNameContainingIgnoreCase(String keyword, Pageable pageable);
 
 }

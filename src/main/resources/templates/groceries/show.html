@@ -11,8 +11,8 @@
     <hr/>
     <h3>Заказы:</h3>
     <div th:each="order: ${orders}">
-        <span th:text="${order.getDateOrder()} + ', ' + ${order.ordersGroseriesList}"
-        >User</span>
+        <a th:href="@{/orders/{id}(id=${order.getOrderId()})}"
+              th:text="${order.getDateOrder()}">User</a>
     </div>
 </div>
 <br/>

@@ -11,6 +11,8 @@
     <title>Все продукты</title>
 </head>
 <body>
+<header th:insert="blocks/header :: header"></header>
+
 <h3>Список продуктов по бюджету</h3>
 <hr>
 <!--<div th:each="product:${groceries}">-->
@@ -37,6 +39,17 @@
 <br/>
 <hr/>
 
+<p th:text="${currentPage}">Текущая страница</p>
+<a th:href="@{/groceries?page=currentPage+1}">Следующая страница</a>
+<!--<a th:href="@{/groceries?page=currentPage-1}">Предыдущая страница</a>-->
+<p th:text="${totalPages}">Всего страниц</p>
+<p th:text="${totalItems}">Всего предметов</p>
+<br>
+
+<a th:href="@{/groceries?product_per_page=10}">10</a>
+<a th:href="@{/groceries?product_per_page=20}">20</a>
+<a th:href="@{/groceries?product_per_page=50}">50</a>
+<br>
 <a href="groceries/new">Добавить новый продукт</a>
 </body>
 </html>
