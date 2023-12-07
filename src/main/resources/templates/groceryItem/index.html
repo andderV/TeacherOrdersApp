@@ -8,14 +8,29 @@
     <title>Все корзины</title>
 </head>
 <body>
-<header th:insert="blocks/header :: header"></header>
+<header th:replace="blocks/header :: header"></header>
 
-<div>
-<a th:text="${groceries}">Orders</a>
-</div>
+<h3>Список заказов</h3>
+<hr>
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Дата</th>
+        <th>ФИО преподавателя</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item:${groceriesItem}">
+        <td><a href="#" th:href="@{/item/{id}(id=${item.getProductId()})}"
+               th:text="${item.order.dateOrder}"/></td>
+        <td th:text="${item.order.owner.teacherName}"/>
+    </tr>
+    </tbody>
+
+</table>
+
 <br/>
 <hr/>
 
-<a href="orders/new">Добавить новый заказ</a>
 </body>
 </html>

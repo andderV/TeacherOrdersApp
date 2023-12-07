@@ -32,7 +32,7 @@ public class UnitValidator implements Validator {
     public void validate(Object target, Errors errors) {
         MeasureUnit unit = (MeasureUnit) target;
         if (measureUnitService.findMeasureUnitByMeasureUnitName(unit.getMeasureUnitName()) != null){
-            errors.rejectValue("measureUnitName", "", "This measureUnitName is already taken");
+            errors.rejectValue("measureUnitName", "", "Это название единицы измерения уже используется");
         }
     }
 }

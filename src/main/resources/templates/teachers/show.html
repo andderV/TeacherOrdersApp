@@ -2,9 +2,14 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
     <title>Страница преподавателя</title>
 </head>
 <body>
+<header th:replace="blocks/header :: header"></header>
+
 <a th:text="${teacher.getTeacherName()} + ', ' + ${teacher.getEmail()}+ ', ' + ${teacher.getPhoneNumber()}"></a>
 <br/>
 <div th:if="${!teacher.getOrdersList().isEmpty()}">
@@ -22,11 +27,11 @@
 
 <form th:method="GET" th:action="@{/teachers/{id}/edit(id=${teacher.getTeacherId()})}">
 
-    <input type="submit" value="Редактировать">
+    <input type="submit" value="Редактировать преподавателя">
 </form>
 
 <form th:method="DELETE" th:action="@{/teachers/{id}(id=${teacher.getTeacherId()})}">
-    <input type="submit" value="Удалить"/>
+    <input type="submit" value="Удалить преподавателя"/>
 </form>
 </body>
 </html>

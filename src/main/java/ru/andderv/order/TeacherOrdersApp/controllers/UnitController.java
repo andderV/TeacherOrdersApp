@@ -68,7 +68,7 @@ public class UnitController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("product") @Valid MeasureUnit unit,
+    public String update(@ModelAttribute("unit") @Valid MeasureUnit unit,
                          BindingResult bindingResult,
                          @PathVariable("id") int id){
 

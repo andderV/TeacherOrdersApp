@@ -32,9 +32,18 @@ public class GroceryItemController {
     }
 
     @GetMapping
-    public String index(Model model) {
-        model.addAttribute("groceries", groceryItemService.findAll());
+    public String index(@RequestParam(value = "sort", required = false, defaultValue = "true") Boolean sort,
+            Model model) {
+        model.addAttribute("groceriesItem", groceryItemService.findAllWithSorting(sort));
         return "groceryItem/index";
+    }
+
+    @GetMapping("/{id}")
+    public String showItem(@PathVariable("id") int id, Model model){
+        model.addAttribute("item", groceryItemService.findById(id));
+        int orderId = groceryItemService.findById(id).getOrder().getOrderId();
+        model.addAttribute("fullListItem", groceryItemService.groceryItemList(orderService.findById(orderId)));
+        return "groceryItem/show";
     }
 
     @GetMapping("/new")
@@ -71,7 +80,7 @@ public class GroceryItemController {
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        groceriesService.delete(id);
+        groceryItemService.delete(id);
         return "redirect:/item";
     }
 

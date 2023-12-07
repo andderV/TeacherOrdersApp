@@ -8,9 +8,11 @@
     <title>Страница заказа</title>
 </head>
 <body>
+<header th:replace="blocks/header :: header"></header>
+
 <a th:text="${order.getDateOrder()} + ', ' + ${order.getOwner().getTeacherName()}"></a>
 <br/>
-<div th:if="${!order.getOrdersGroseriesList().isEmpty()}">
+<div th:if="${!order.getGroceriesItem().isEmpty()}">
     <hr/>
     <h3>Продукты:</h3>
     <table class="table table-bordered table-striped">
@@ -38,17 +40,17 @@
 <!--    </div>-->
 </div>
 <br/>
-<div th:if="${order.getOrdersGroseriesList().isEmpty()}">Этот заказ не содержит ни одного продукта</div>
+<div th:if="${order.getGroceriesItem().isEmpty()}">Этот заказ не содержит ни одного продукта</div>
 
 <hr/>
 
 <form th:method="GET" th:action="@{/orders/{id}/edit(id=${order.getOrderId()})}">
 
-    <input type="submit" value="Редактировать">
+    <input type="submit" value="Редактировать заказ">
 </form>
 
 <form th:method="DELETE" th:action="@{/orders/{id}(id=${order.getOrderId()})}">
-    <input type="submit" value="Удалить"/>
+    <input type="submit" value="Удалить заказ"/>
 </form>
 </body>
 </html>

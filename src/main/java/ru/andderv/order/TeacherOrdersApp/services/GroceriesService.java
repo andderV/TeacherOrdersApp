@@ -9,9 +9,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.andderv.order.TeacherOrdersApp.models.Groceries;
+import ru.andderv.order.TeacherOrdersApp.models.GroceryItem;
 import ru.andderv.order.TeacherOrdersApp.models.Orders;
 import ru.andderv.order.TeacherOrdersApp.repositories.GroceriesRepository;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -81,11 +83,11 @@ public class GroceriesService {
         return product.orElse(null);
     }
 
-    public List<Orders> getOrdersByProductId(int id) {
+    public List<GroceryItem> getOrdersByProductId(int id) {
         Optional<Groceries> optionalProduct = groceriesRepository.findById(id);
         if (optionalProduct.isPresent()) {
-            Hibernate.initialize(optionalProduct.get().getOrdersGroceriesList());
-            return optionalProduct.get().getOrdersGroceriesList();
+            Hibernate.initialize(optionalProduct.get().getGroceriesItem());
+            return optionalProduct.get().getGroceriesItem();
         } else {
             return Collections.emptyList();
         }

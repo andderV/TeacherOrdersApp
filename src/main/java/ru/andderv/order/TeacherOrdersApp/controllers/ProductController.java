@@ -94,8 +94,7 @@ public class ProductController {
         model.addAttribute("product", groceriesService.findById(id));
         model.addAttribute("units", unitService.findAll());
         model.addAttribute("unit",
-                unitService.findMeasureUnitByMeasureUnitName(groceriesService.findById(id)
-                        .getMeasureUnit().getMeasureUnitName()));
+                groceriesService.findById(id).getMeasureUnit());
         return "groceries/edit";
     }
 

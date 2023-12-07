@@ -1,6 +1,7 @@
 package ru.andderv.order.TeacherOrdersApp.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.andderv.order.TeacherOrdersApp.models.Groceries;
@@ -28,6 +29,16 @@ public class GroceryItemService {
     public List<GroceryItem>findAll(){
         return groceryItemRepo.findAll();
     }
+
+    public List<GroceryItem>findAllWithSorting(boolean sortByDateOrder){
+        if (sortByDateOrder) {
+            return groceryItemRepo.findAll(Sort.by("order.dateOrder").descending());
+        } else {
+            return groceryItemRepo.findAll();
+        }
+
+    }
+
     public GroceryItem findById(int id){
         return groceryItemRepo.findById(id).orElse(null);
     }
@@ -39,5 +50,10 @@ public class GroceryItemService {
     @Transactional
     public void save(GroceryItem item) {
         groceryItemRepo.save(item);
+    }
+
+    @Transactional
+    public void delete(int id) {
+        groceryItemRepo.deleteById(id);
     }
 }

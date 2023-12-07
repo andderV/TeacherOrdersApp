@@ -8,7 +8,7 @@
     <title>Все заказы</title>
 </head>
 <body>
-<header th:insert="blocks/header :: header"></header>
+<header th:replace="blocks/header :: header"></header>
 
 <div th:each="order:${orders}">
 <a th:href="@{/orders/{id}(id=${order.getOrderId()})}"

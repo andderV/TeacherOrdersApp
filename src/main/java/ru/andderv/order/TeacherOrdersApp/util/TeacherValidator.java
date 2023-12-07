@@ -30,7 +30,7 @@ public class TeacherValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Teacher teacher = (Teacher) target;
         if (teachersService.findTeacherByTeacherName(teacher.getTeacherName()) != null){
-            errors.rejectValue("teacherName", "", "This teacherName is already taken");
+            errors.rejectValue("teacherName", "", "Это имя преподавателя уже используется");
         }
     }
 }

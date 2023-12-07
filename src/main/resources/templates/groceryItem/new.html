@@ -9,6 +9,7 @@
     <title>Новый заказ</title>
 </head>
 <body>
+<header th:replace="blocks/header :: header"></header>
 <!--<header th:insert="blocks/header :: header"></header>-->
 
 <form th:method="POST" th:action="@{/item}" th:object="${item}">

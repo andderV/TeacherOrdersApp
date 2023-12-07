@@ -32,7 +32,7 @@ public class ProductValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Groceries product = (Groceries) target;
         if (groceriesService.findProductByProductName(product.getProductName()) != null){
-            errors.rejectValue("productName", "", "This productName is already taken");
+            errors.rejectValue("productName", "", "Это название продукта уже используется");
         }
     }
 }

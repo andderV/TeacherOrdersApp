@@ -2,8 +2,11 @@ package ru.andderv.order.TeacherOrdersApp.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotEmpty;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -30,17 +33,19 @@ public class Orders {
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @FutureOrPresent(message = "Дата должна быть не позднее текущей даты ")
+    @FutureOrPresent(message = "Дата должна быть не позднее текущей даты")
     private Date dateOrder;
     @ManyToOne
     @JoinColumn(name = "teacher_id", referencedColumnName = "teacher_id")
     private Teacher owner;
 
     @OneToMany(mappedBy = "order")
-    private List<GroceryItem>groceriesItem;
+    @Cascade({org.hibernate.annotations.CascadeType.PERSIST,
+            org.hibernate.annotations.CascadeType.MERGE})
+    private List<GroceryItem> groceriesItem;
 
-    @ManyToMany(mappedBy = "ordersGroceriesList", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
-    private List<Groceries>ordersGroseriesList;
+//    @ManyToMany(mappedBy = "ordersGroceriesList", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    private List<Groceries> ordersGroseriesList;
 
     public Orders(Date dateOrder) {
         this.dateOrder = dateOrder;

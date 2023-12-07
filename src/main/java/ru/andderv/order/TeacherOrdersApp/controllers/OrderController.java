@@ -8,7 +8,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.andderv.order.TeacherOrdersApp.models.Orders;
 import ru.andderv.order.TeacherOrdersApp.models.Teacher;
-import ru.andderv.order.TeacherOrdersApp.services.*;
+import ru.andderv.order.TeacherOrdersApp.services.GroceryItemService;
+import ru.andderv.order.TeacherOrdersApp.services.OrderService;
+import ru.andderv.order.TeacherOrdersApp.services.TeachersService;
 
 /**
  * @author andderV
@@ -58,7 +60,7 @@ public class OrderController {
         model.addAttribute("teachers", teachersService.findAll());
 
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "order/new";
         }
 
@@ -71,12 +73,28 @@ public class OrderController {
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
         model.addAttribute("order", orderService.findById(id));
+        model.addAttribute("teachers", teachersService.findAll());
+        model.addAttribute("owner", orderService.findById(id).getOwner());
+
+        System.out.println("teacher, который ушел в форму " + orderService.findById(id).getOwner().getTeacherName());
+
         return "order/edit";
     }
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("order") @Valid Orders order,
-                         @PathVariable("id") int id) {
+                         BindingResult bindingResult,
+                         @ModelAttribute("owner") Teacher owner,
+                         @PathVariable("id") int id,
+                         Model model) {
+        model.addAttribute("teachers", teachersService.findAll());
+
+
+        if (bindingResult.hasErrors()) {
+            return "order/edit";
+        }
+
+        System.out.println("teacher, который пришел из формы " + owner.getTeacherName());
 
         orderService.update(id, order);
         return "redirect:/orders";
