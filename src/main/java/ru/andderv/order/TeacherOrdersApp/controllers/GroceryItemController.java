@@ -31,17 +31,17 @@ public class GroceryItemController {
         this.groceriesService = groceriesService;
     }
 
-    @GetMapping
-    public String index(@RequestParam(value = "sort", required = false, defaultValue = "true") Boolean sort,
-            Model model) {
-        model.addAttribute("groceriesItem", groceryItemService.findAllWithSorting(sort));
-        return "groceryItem/index";
-    }
+//    @GetMapping
+//    public String index(@RequestParam(value = "sort", required = false, defaultValue = "true") Boolean sort,
+//            Model model) {
+//        model.addAttribute("groceriesItem", groceryItemService.findAllWithSorting(sort));
+//        return "groceryItem/index";
+//    }
 
     @GetMapping("/{id}")
-    public String showItem(@PathVariable("id") int id, Model model){
-        model.addAttribute("item", groceryItemService.findById(id));
+    public String showItem(@PathVariable("id") int id, Model model) {
         int orderId = groceryItemService.findById(id).getOrder().getOrderId();
+        model.addAttribute("item", groceryItemService.findById(id));
         model.addAttribute("fullListItem", groceryItemService.groceryItemList(orderService.findById(orderId)));
         return "groceryItem/show";
     }
@@ -78,10 +78,39 @@ public class GroceryItemController {
         return "redirect:/item/new?orderId=" + orders.getOrderId();
     }
 
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable("id") Integer orderId,
+                       @ModelAttribute("item") GroceryItem item,
+                       @ModelAttribute("product") Groceries grocery,
+                       Model model) {
+        model.addAttribute("order", orderService.findById(orderId));
+        model.addAttribute("groceries", groceriesService.findAll(true));
+        model.addAttribute("fullListItem", groceryItemService.groceryItemList(orderService.findById(orderId)));
+        return "groceryItem/edit";
+    }
+
+    @PatchMapping
+    public String update(@ModelAttribute("item") @Valid GroceryItem item,
+                         BindingResult bindingResult,
+                         @ModelAttribute("product") Groceries grocery,
+                         @ModelAttribute("order") Orders orders) {
+
+        if (bindingResult.hasErrors()) {
+            return "groceryItem/new";
+
+        }
+
+        item.setGrocery(grocery);
+        item.setOrder(orders);
+        groceryItemService.save(item);
+        return "redirect:/item/" + orders.getOrderId() + "/edit";
+    }
+
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
+        int orderId = groceryItemService.findById(id).getOrder().getOrderId();
         groceryItemService.delete(id);
-        return "redirect:/item";
+        return "redirect:/orders/" + orderId;
     }
 
 }

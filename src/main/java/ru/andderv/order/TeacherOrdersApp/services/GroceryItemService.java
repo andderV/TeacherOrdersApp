@@ -8,7 +8,9 @@ import ru.andderv.order.TeacherOrdersApp.models.Groceries;
 import ru.andderv.order.TeacherOrdersApp.models.GroceryItem;
 import ru.andderv.order.TeacherOrdersApp.models.Orders;
 import ru.andderv.order.TeacherOrdersApp.repositories.GroceryItemRepo;
+import ru.andderv.order.TeacherOrdersApp.repositories.OrderRepository;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -26,18 +28,18 @@ public class GroceryItemService {
         this.groceryItemRepo = groceryItemRepo;
     }
 
-    public List<GroceryItem>findAll(){
-        return groceryItemRepo.findAll();
-    }
+//    public List<GroceryItem>findAll(){
+//        return groceryItemRepo.findAll();
+//    }
 
-    public List<GroceryItem>findAllWithSorting(boolean sortByDateOrder){
-        if (sortByDateOrder) {
-            return groceryItemRepo.findAll(Sort.by("order.dateOrder").descending());
-        } else {
-            return groceryItemRepo.findAll();
-        }
-
-    }
+//    public List<GroceryItem>findAllWithSorting(boolean sortByDateOrder){
+//        if (sortByDateOrder) {
+//            return groceryItemRepo.findAll(Sort.by("order.dateOrder").descending());
+//        } else {
+//            return groceryItemRepo.findAll();
+//        }
+//
+//    }
 
     public GroceryItem findById(int id){
         return groceryItemRepo.findById(id).orElse(null);
@@ -56,4 +58,5 @@ public class GroceryItemService {
     public void delete(int id) {
         groceryItemRepo.deleteById(id);
     }
+
 }

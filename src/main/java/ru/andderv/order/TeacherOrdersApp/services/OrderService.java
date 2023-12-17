@@ -28,6 +28,15 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
+    public List<Orders>findAllWithSorting(boolean sortByDateOrder){
+        if (sortByDateOrder) {
+            return orderRepository.findAll(Sort.by("dateOrder").descending());
+        } else {
+            return orderRepository.findAll();
+        }
+
+    }
+
     public Orders findById(int id) {
         return orderRepository.findById(id).orElse(null);
     }
