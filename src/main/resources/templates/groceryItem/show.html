@@ -18,7 +18,7 @@
         <th>Название продукта</th>
         <th>Единица измерения</th>
         <th>Количество</th>
-        <!--        <th>Дополнительная информация</th>-->
+<!--        <th>Дополнительная информация</th>-->
     </tr>
     </thead>
     <tbody>
@@ -27,6 +27,7 @@
         <td th:text="${item.grocery.measureUnit.measureUnitName}"/>
         <td th:text="${item.quantity}"/>
     </tr>
+
     </tbody>
 
 </table>
@@ -40,10 +41,6 @@
 
 <form th:method="GET" th:action="@{/groceryItem/{id}/edit(id=${item.getProductId()})}">
     <input type="submit" value="Редактировать корзину">
-</form>
-
-<form th:method="DELETE" th:action="@{/groceryItem/{id}(id=${item.getProductId()})}">
-    <input type="submit" value="Удалить товар из корзины"/>
 </form>
 </body>
 </html>

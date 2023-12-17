@@ -10,13 +10,14 @@
 <body>
 <header th:replace="blocks/header :: header"></header>
 
+<a href="orders/new">Добавить новый заказ</a>
+<br/>
+<hr/>
+
 <div th:each="order:${orders}">
 <a th:href="@{/orders/{id}(id=${order.getOrderId()})}"
    th:text="${order.getDateOrder()} + ', ' + ${order.getOwner().teacherName}">Orders</a>
 </div>
-<br/>
-<hr/>
 
-<a href="orders/new">Добавить новый заказ</a>
 </body>
 </html>

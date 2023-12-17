@@ -1,5 +1,6 @@
 package ru.andderv.order.TeacherOrdersApp.repositories;
 
+import jakarta.persistence.criteria.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.andderv.order.TeacherOrdersApp.models.Groceries;
@@ -18,4 +19,5 @@ import java.util.Optional;
 @Repository
 public interface GroceryItemRepo extends JpaRepository<GroceryItem, Integer> {
     List<GroceryItem> findByOrder(Orders orders);
+
 }

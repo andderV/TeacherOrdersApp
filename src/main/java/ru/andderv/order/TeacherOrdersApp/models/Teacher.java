@@ -35,7 +35,7 @@ public class Teacher {
     @Column(name = "email")
     private String email;
     @NotEmpty(message = "Поле не может быть пустым")
-    @Pattern(regexp = "^\\+7-\\d{3}-\\d{3}-\\d{2}-\\d{2}", message = "Номер телефона должен быть в формате +7ХХХ-ХХХ-ХХ-ХХ")
+    @Pattern(regexp = "^\\+7-\\d{3}-\\d{3}-\\d{2}-\\d{2}", message = "Номер телефона должен быть в формате +7-ХХХ-ХХХ-ХХ-ХХ")
     @Column(name = "phone_number")
     private String phoneNumber;
     @OneToMany(mappedBy = "owner", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})

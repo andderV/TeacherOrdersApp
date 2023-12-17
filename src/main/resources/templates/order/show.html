@@ -12,10 +12,15 @@
 
 <a th:text="${order.getDateOrder()} + ', ' + ${order.getOwner().getTeacherName()}"></a>
 <br/>
+<form th:method="GET" th:action="@{/item/{id}/edit(id=${order.orderId})}">
+    <button class="btn btn-success rounded-pill px-3" type="submit">
+        <ya-tr-span data-index="1-2" data-translated="true" data-source-lang="en" data-target-lang="ru" data-value="Success" data-translation="Успех" data-ch="0" data-type="trSpan" data-selected="false">Добавить продукты</ya-tr-span>
+    </button>
+</form>
 <div th:if="${!order.getGroceriesItem().isEmpty()}">
     <hr/>
     <h3>Продукты:</h3>
-    <table class="table table-bordered table-striped">
+                <table class="table table-bordered table-striped">
         <thead>
         <tr>
             <th>Название продукта</th>
@@ -29,15 +34,19 @@
             <td th:text="${item.grocery.productName}"/>
             <td th:text="${item.quantity}"/>
             <td th:text="${item.grocery.measureUnit.measureUnitName}"/>
+            <td><form th:method="DELETE" th:action="@{/item/{id}(id=${item.getProductId()})}">
+                <button class="btn btn-danger rounded-pill px-3" type="submit">
+                <ya-tr-span data-index="1-3" data-translated="true" data-source-lang="en" data-target-lang="ru" data-value="Danger" data-translation="Опасность" data-ch="0" data-type="trSpan" data-selected="false">Удалить</ya-tr-span></button>
+            </form>
+            </td>
         </tr>
+
         </tbody>
+
 
     </table>
 
-<!--    <div th:each="item: ${groceryItem}">-->
-<!--        <span th:text="${item.grocery.productName} + ' ' + ${item.grocery.measureUnit.measureUnitName} + ' ' + ${item.quantity}"-->
-<!--        >Product</span>-->
-<!--    </div>-->
+
 </div>
 <br/>
 <div th:if="${order.getGroceriesItem().isEmpty()}">Этот заказ не содержит ни одного продукта</div>

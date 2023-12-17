@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.andderv.order.TeacherOrdersApp.models.GroceryItem;
 import ru.andderv.order.TeacherOrdersApp.models.Orders;
 import ru.andderv.order.TeacherOrdersApp.repositories.OrderRepository;
 
@@ -26,6 +27,15 @@ public class OrderService {
 
     public List<Orders> findAll() {
         return orderRepository.findAll();
+    }
+
+    public List<Orders>findAllWithSorting(boolean sortByDateOrder){
+        if (sortByDateOrder) {
+            return orderRepository.findAll(Sort.by("dateOrder").descending());
+        } else {
+            return orderRepository.findAll();
+        }
+
     }
 
     public Orders findById(int id) {

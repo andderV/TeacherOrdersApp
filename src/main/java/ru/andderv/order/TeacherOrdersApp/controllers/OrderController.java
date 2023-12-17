@@ -32,15 +32,23 @@ public class OrderController {
         this.groceryItemService = groceryItemService;
     }
 
+//    @GetMapping
+//    public String index(Model model) {
+//        model.addAttribute("orders", orderService.findAll());
+//        return "order/index";
+//    }
+
     @GetMapping
-    public String index(Model model) {
-        model.addAttribute("orders", orderService.findAll());
+    public String index(@RequestParam(value = "sort", required = false, defaultValue = "true") Boolean sort,
+                        Model model) {
+        model.addAttribute("orders", orderService.findAllWithSorting(sort));
         return "order/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("order", orderService.findById(id));
+        Orders order = orderService.findById(id);
+        model.addAttribute("order", order);
         model.addAttribute("groceryItem", groceryItemService.groceryItemList(orderService.findById(id)));
         return "order/show";
     }
@@ -72,11 +80,11 @@ public class OrderController {
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("order", orderService.findById(id));
+        Orders order = orderService.findById(id);
+        model.addAttribute("order", order);
         model.addAttribute("teachers", teachersService.findAll());
         model.addAttribute("owner", orderService.findById(id).getOwner());
-
-        System.out.println("teacher, который ушел в форму " + orderService.findById(id).getOwner().getTeacherName());
+        model.addAttribute("groceryItem", groceryItemService.groceryItemList(order));
 
         return "order/edit";
     }
@@ -94,8 +102,7 @@ public class OrderController {
             return "order/edit";
         }
 
-        System.out.println("teacher, который пришел из формы " + owner.getTeacherName());
-
+        order.setOwner(owner);
         orderService.update(id, order);
         return "redirect:/orders";
     }
