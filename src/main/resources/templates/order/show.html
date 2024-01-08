@@ -14,13 +14,22 @@
 <br/>
 <form th:method="GET" th:action="@{/item/{id}/edit(id=${order.orderId})}">
     <button class="btn btn-success rounded-pill px-3" type="submit">
-        <ya-tr-span data-index="1-2" data-translated="true" data-source-lang="en" data-target-lang="ru" data-value="Success" data-translation="Успех" data-ch="0" data-type="trSpan" data-selected="false">Добавить продукты</ya-tr-span>
+        <ya-tr-span data-index="1-2" data-translated="true" data-source-lang="en" data-target-lang="ru"
+                    data-value="Success" data-translation="Успех" data-ch="0" data-type="trSpan" data-selected="false">
+            Добавить продукты
+        </ya-tr-span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building-add"
+             viewBox="0 0 16 16">
+            <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0"/>
+            <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1z"/>
+            <path d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+        </svg>
     </button>
 </form>
 <div th:if="${!order.getGroceriesItem().isEmpty()}">
     <hr/>
     <h3>Продукты:</h3>
-                <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped">
         <thead>
         <tr>
             <th>Название продукта</th>
@@ -34,10 +43,20 @@
             <td th:text="${item.grocery.productName}"/>
             <td th:text="${item.quantity}"/>
             <td th:text="${item.grocery.measureUnit.measureUnitName}"/>
-            <td><form th:method="DELETE" th:action="@{/item/{id}(id=${item.getProductId()})}">
-                <button class="btn btn-danger rounded-pill px-3" type="submit">
-                <ya-tr-span data-index="1-3" data-translated="true" data-source-lang="en" data-target-lang="ru" data-value="Danger" data-translation="Опасность" data-ch="0" data-type="trSpan" data-selected="false">Удалить</ya-tr-span></button>
-            </form>
+            <td>
+                <form th:method="DELETE" th:action="@{/item/{id}(id=${item.getProductId()})}">
+                    <button class="btn btn-danger rounded-pill px-3" type="submit">
+                        <ya-tr-span data-index="1-3" data-translated="true" data-source-lang="en" data-target-lang="ru"
+                                    data-value="Danger" data-translation="Опасность" data-ch="0" data-type="trSpan"
+                                    data-selected="false">
+                            Удалить
+                        </ya-tr-span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-trash3" viewBox="0 0 16 16">
+                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                        </svg>
+                    </button>
+                </form>
             </td>
         </tr>
 

@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.andderv.order.TeacherOrdersApp.models.OrderResult;
 import ru.andderv.order.TeacherOrdersApp.models.Orders;
 import ru.andderv.order.TeacherOrdersApp.repositories.OrderRepository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,6 +37,10 @@ public class OrderService {
             return orderRepository.findAll();
         }
 
+    }
+
+    public List<OrderResult>findAllByDateOrderBetweenStartAndEnd(Date start, Date end){
+        return orderRepository.findAllByDateOrderBetweenStartAndEnd(start, end);
     }
 
     public Orders findById(int id) {

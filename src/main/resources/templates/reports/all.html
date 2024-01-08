@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
+    <title>Все продукты</title>
+</head>
+<body>
+<header th:replace="blocks/header :: header"></header>
+
+<h3>Список заказанных продуктов
+    <span th:if="${!productResult.isEmpty()}">
+    <span th:text="'c ' + ${#dates.format(result.start, 'dd MMMM')} + ' по ' + ${#dates.format(result.end, 'dd MMMM')}">с
+    </span>
+</span>
+</h3>
+<form method="GET" th:action="@{/item/report/grocery?start=${result.start}&end=${result.end}}" th:object="${result}">
+    <div class="form-control">
+        <label for="start">Выберите дату: </label>
+        <input type="date" th:field="${result.start}" id="start">
+        <label for="end">Выберите дату: </label>
+        <input type="date" th:field="${result.end}" id="end">
+        <button type="submit">Список продуктов за период</button>
+        <a href="group.html" th:href="@{/item/report/order(start=${#dates.format(result.start, 'yyyy-MM-dd')},
+        end=${#dates.format(result.end,'yyyy-MM-dd')})}">Список заказов за период</a>
+    </div>
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Название продукта</th>
+        <th>Количество</th>
+        <th>Единица измерения</th>
+        <!--        <th>Дополнительная информация</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product:${productResult}">
+        <td><a th:href="@{/groceries/{id}(id=${product.groceryId})}" th:text="${product.productName}"/>
+        <td th:text="${product.quantity}"/>
+        <td th:text="${product.measureUnitName}"/>
+    </tr>
+    </tbody>
+
+</table>
+
+<br/>
+</body>
+</html>

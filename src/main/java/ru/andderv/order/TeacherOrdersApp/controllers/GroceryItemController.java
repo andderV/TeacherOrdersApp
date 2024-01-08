@@ -1,6 +1,7 @@
 package ru.andderv.order.TeacherOrdersApp.controllers;
 
 import jakarta.validation.Valid;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -8,9 +9,13 @@ import org.springframework.web.bind.annotation.*;
 import ru.andderv.order.TeacherOrdersApp.models.Groceries;
 import ru.andderv.order.TeacherOrdersApp.models.GroceryItem;
 import ru.andderv.order.TeacherOrdersApp.models.Orders;
+import ru.andderv.order.TeacherOrdersApp.models.Result;
 import ru.andderv.order.TeacherOrdersApp.services.GroceriesService;
 import ru.andderv.order.TeacherOrdersApp.services.GroceryItemService;
 import ru.andderv.order.TeacherOrdersApp.services.OrderService;
+
+import java.util.Date;
+
 
 /**
  * @author andderV
@@ -47,10 +52,10 @@ public class GroceryItemController {
     }
 
     @GetMapping("/new")
-    public String newOrder(@RequestParam(value = "orderId", required = false) Integer orderId,
-                           @ModelAttribute("item") GroceryItem item,
-                           @ModelAttribute("product") Groceries grocery,
-                           Model model) {
+    public String newItem(@RequestParam(value = "orderId", required = false) Integer orderId,
+                          @ModelAttribute("item") GroceryItem item,
+                          @ModelAttribute("product") Groceries grocery,
+                          Model model) {
         model.addAttribute("order", orderService.findById(orderId));
         model.addAttribute("groceries", groceriesService.findAll(true));
         model.addAttribute("fullListItem", groceryItemService.groceryItemList(orderService.findById(orderId)));
@@ -90,10 +95,10 @@ public class GroceryItemController {
     }
 
     @PatchMapping
-    public String update(@ModelAttribute("item") @Valid GroceryItem item,
-                         BindingResult bindingResult,
-                         @ModelAttribute("product") Groceries grocery,
-                         @ModelAttribute("order") Orders orders) {
+    public String addItem(@ModelAttribute("item") @Valid GroceryItem item,
+                          BindingResult bindingResult,
+                          @ModelAttribute("product") Groceries grocery,
+                          @ModelAttribute("order") Orders orders) {
 
         if (bindingResult.hasErrors()) {
             return "groceryItem/new";
@@ -111,6 +116,45 @@ public class GroceryItemController {
         int orderId = groceryItemService.findById(id).getOrder().getOrderId();
         groceryItemService.delete(id);
         return "redirect:/orders/" + orderId;
+    }
+
+//    @GetMapping("/report/all")
+//    public String showAll(@RequestParam(value = "sort", required = false, defaultValue = "true") boolean sortByProductName,
+//                          Model model,
+//                          @ModelAttribute("result") Result result) {
+//        model.addAttribute("productResult", groceryItemService.findAllWithSorting(sortByProductName));
+//        return "reports/all";
+//    }
+
+//    @GetMapping("/report/group")
+//    public String showAllProductWithResult(Model model) {
+//        model.addAttribute("productResult", groceryItemService.sumTotalGroceryItemByGrocery());
+//        return "reports/group";
+//    }
+
+    @GetMapping("/report/order")
+    public String showAllOrdersByDateOrderBetweenStartAndEnd(@RequestParam(value = "start", required = false)
+                                                             @DateTimeFormat(pattern = "yyyy-MM-dd") Date start,
+                                                             @RequestParam(value = "end", required = false)
+                                                             @DateTimeFormat(pattern = "yyyy-MM-dd") Date end,
+                                                             Model model) {
+        model.addAttribute("ordersResult",
+                orderService.findAllByDateOrderBetweenStartAndEnd(start, end));
+
+        return "reports/group";
+    }
+
+    @GetMapping("/report/grocery")
+    public String showAllProductWithResultDateBetween(@RequestParam(value = "start", required = false)
+                                                      @DateTimeFormat(pattern = "yyyy-MM-dd") Date start,
+                                                      @RequestParam(value = "end", required = false)
+                                                      @DateTimeFormat(pattern = "yyyy-MM-dd") Date end,
+                                                      Model model,
+                                                      @ModelAttribute("result") Result result) {
+        model.addAttribute("productResult",
+                groceryItemService.sumTotalGroceryItemByGroceryWithDateBetween(start, end));
+
+        return "reports/all";
     }
 
 }

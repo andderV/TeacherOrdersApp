@@ -53,6 +53,14 @@ public class OrderController {
         return "order/show";
     }
 
+    @PatchMapping("/{id}/update")
+    public String updateQuantity(@PathVariable("id") int id,
+                                 @ModelAttribute("order") Orders orders,
+                                 Model model){
+        model.addAttribute("groceryItem", groceryItemService.groceryItemList(orderService.findById(id)));
+        return "redirect:";
+    }
+
     @GetMapping("/new")
     public String newOrder(@ModelAttribute("order") Orders order, @ModelAttribute("owner") Teacher teacher,
                            Model model) {

@@ -10,21 +10,33 @@
 <body>
 <header th:replace="blocks/header :: header"></header>
 
-<div class="container mt-5">
-<!--    <div th:each="teacher:${teachers}" class="alert alert-info mt-2">-->
-    <div th:each="teacher:${teachers}">
-        <header class="d-flex justify-content-left py-3">
-            <ul class="nav nav-pills">
-                <li class="nav-item"><a th:href="@{/teachers/{id}(id=${teacher.getTeacherId()})}"
-                                        th:text="${teacher.getTeacherName()}"
-                                        class="nav-link active" aria-current="page">Teacher</a></li>
-            </ul>
-        </header>
-    </div>
-</div>
-<br/>
+<a class="btn btn-primary" href="teachers/new" role="button">Добавить нового преподавателя
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-add" viewBox="0 0 16 16">
+        <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+        <path d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"/>
+    </svg>
+</a>
 <hr/>
+<br/>
 
-<a href="teachers/new">Добавить нового преподавателя</a>
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>ФИО преподавателя</th>
+        <th>Телефон</th>
+        <th>e-mail</th>
+        <!--        <th>Дополнительная информация</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="teacher:${teachers}">
+        <td><a th:href="@{/teachers/{id}(id=${teacher.getTeacherId()})}"
+               th:text="${teacher.getTeacherName()}"/></td>
+        <td th:text="${teacher.phoneNumber}"></td>
+        <td th:text="${teacher.email}"></td>
+    </tr>
+    </tbody>
+</table>
+
 </body>
 </html>

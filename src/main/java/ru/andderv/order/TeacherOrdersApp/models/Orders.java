@@ -46,6 +46,16 @@ public class Orders {
 
 //    @ManyToMany(mappedBy = "ordersGroceriesList", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 //    private List<Groceries> ordersGroseriesList;
+//    @Transient
+//    @Temporal(TemporalType.DATE)
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
+//    @FutureOrPresent(message = "Дата должна быть не позднее текущей даты")
+//    private Date startDate;
+//    @Transient
+//    @Temporal(TemporalType.DATE)
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
+//    @FutureOrPresent(message = "Дата должна быть не позднее текущей даты")
+//    private Date endDate;
 
     public Orders(Date dateOrder) {
         this.dateOrder = dateOrder;
