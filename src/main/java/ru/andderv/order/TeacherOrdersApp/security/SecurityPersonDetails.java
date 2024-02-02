@@ -1,10 +1,15 @@
 package ru.andderv.order.TeacherOrdersApp.security;
 
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 import ru.andderv.order.TeacherOrdersApp.models.SecurityPerson;
 
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * @author andderV
@@ -20,7 +25,7 @@ public class SecurityPersonDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.singletonList(new SimpleGrantedAuthority(person.getRole()));
     }
 
     @Override

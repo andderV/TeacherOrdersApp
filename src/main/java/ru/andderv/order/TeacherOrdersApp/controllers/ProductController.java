@@ -5,15 +5,21 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.andderv.order.TeacherOrdersApp.models.Groceries;
 import ru.andderv.order.TeacherOrdersApp.models.MeasureUnit;
+import ru.andderv.order.TeacherOrdersApp.repositories.GroceriesRepository;
 import ru.andderv.order.TeacherOrdersApp.services.GroceriesService;
 import ru.andderv.order.TeacherOrdersApp.services.MeasureUnitService;
 import ru.andderv.order.TeacherOrdersApp.util.ProductValidator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author andderV
@@ -35,11 +41,19 @@ public class ProductController {
     }
 
     @GetMapping
-    public String index(@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-                        @RequestParam(value = "product_per_page", required = false, defaultValue = "20") @Min(0) Integer productPerPage,
-                        @RequestParam(value = "sort_by_product_name", required = false, defaultValue = "true") @Min(1) @Max(100) boolean sortByProductName,
+    public String index(@RequestParam(value = "page", required = false, defaultValue = "0") @Min(0)Integer page,
+                        @RequestParam(value = "product_per_page", required = false, defaultValue = "20") @Min(1) @Max(100) Integer productPerPage,
+                        @RequestParam(value = "sort_by_product_name", required = false, defaultValue = "true") boolean sortByProductName,
                         Model model) {
-        Page<Groceries> groceriesPage = groceriesService.findAll(page, productPerPage, sortByProductName);
+
+        List<Groceries> groceries = new ArrayList<>();
+
+        Page<Groceries>pageGroceries = groceriesService.findAll(page, productPerPage, sortByProductName);
+
+
+        groceries = pageGroceries.getContent();
+
+//        Page<Groceries> groceriesPage = groceriesService.findAll(page, productPerPage, sortByProductName);
 //        if (page == null || productPerPage == null) {
 //            model.addAttribute("groceries", groceriesService.findAll(sortByProductName));
 //
@@ -47,12 +61,14 @@ public class ProductController {
 //
 //        } else {
 
+
         model.addAttribute("groceries", groceriesService
                 .findAllWithPaginationAndSorting(page, productPerPage, sortByProductName));
-        model.addAttribute("currentPage", groceriesPage.getNumber() + 1);
-        model.addAttribute("totalItems", groceriesPage.getTotalElements());
-        model.addAttribute("totalPages", groceriesPage.getTotalPages());
-        model.addAttribute("pageSize", productPerPage);
+        model.addAttribute("page", pageGroceries);
+        model.addAttribute("currentPage", pageGroceries.getNumber() + 1);
+        model.addAttribute("totalItems", pageGroceries.getTotalElements());
+        model.addAttribute("totalPages", pageGroceries.getTotalPages());
+        model.addAttribute("pageSize", groceries.size());
 
 //        }
         return "groceries/index";
