@@ -33,5 +33,8 @@ public class SecurityPerson {
     private String userPassword;
     @Column(name = "role")
     private String role;
+    @Transient
+    @NotEmpty(message = "Ключ не может быть пустым")
+    private String key;
 
 }
