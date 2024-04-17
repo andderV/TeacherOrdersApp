@@ -8,7 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import ru.andderv.order.TeacherOrdersApp.services.SecurityPersonService;
+import ru.andderv.order.TeacherOrdersApp.services.TeachersService;
 
 import java.util.Collections;
 
@@ -19,17 +19,19 @@ import java.util.Collections;
  */
 @Component
 public class AuthProviderImpl implements AuthenticationProvider {
-    private final SecurityPersonService securityPersonService;
+//    private final SecurityPersonService securityPersonService;
+    private final TeachersService teachersService;
 
     @Autowired
-    public AuthProviderImpl(SecurityPersonService securityPersonService) {
-        this.securityPersonService = securityPersonService;
+    public AuthProviderImpl(TeachersService teachersService) {
+        this.teachersService = teachersService;
+//        this.securityPersonService = securityPersonService;
     }
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String name = authentication.getName();
-        UserDetails personDetails = securityPersonService.loadUserByUsername(name);
+        UserDetails personDetails = teachersService.loadUserByUsername(name);
         String password = authentication.getCredentials().toString();
 
         if (!password.equals(personDetails.getPassword())) {

@@ -1,12 +1,9 @@
 package ru.andderv.order.TeacherOrdersApp.security;
 
-import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
-import ru.andderv.order.TeacherOrdersApp.models.SecurityPerson;
+import ru.andderv.order.TeacherOrdersApp.models.Teacher;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -16,26 +13,28 @@ import java.util.Collections;
  * @date 11.11.2023 15:53
  * TeacherOrdersApp
  */
-public class SecurityPersonDetails implements UserDetails {
-    private final SecurityPerson person;
+public class TeacherDetails implements UserDetails {
+//    private final SecurityPerson person;
+    private final Teacher teacher;
 
-    public SecurityPersonDetails(SecurityPerson person) {
-        this.person = person;
+
+    public TeacherDetails(Teacher teacher) {
+        this.teacher = teacher;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(person.getRole()));
+        return Collections.singletonList(new SimpleGrantedAuthority(teacher.getRole()));
     }
 
     @Override
     public String getPassword() {
-        return person.getUserPassword();
+        return teacher.getUserPassword();
     }
 
     @Override
     public String getUsername() {
-        return person.getUserName();
+        return teacher.getUserName();
     }
 
     @Override
@@ -58,7 +57,7 @@ public class SecurityPersonDetails implements UserDetails {
         return true;
     }
 
-    public SecurityPerson getPerson(){
-        return this.person;
+    public Teacher getTeacher(){
+        return this.teacher;
     }
 }

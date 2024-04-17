@@ -6,8 +6,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.andderv.order.TeacherOrdersApp.exception.IncorrectKeyException;
-import ru.andderv.order.TeacherOrdersApp.models.SecurityPerson;
-import ru.andderv.order.TeacherOrdersApp.repositories.SecurityPersonRepository;
+import ru.andderv.order.TeacherOrdersApp.models.Teacher;
+import ru.andderv.order.TeacherOrdersApp.repositories.TeachersRepository;
 
 /**
  * @author andderV
@@ -19,16 +19,16 @@ public class RegistrationService {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final SecurityPersonRepository personRepository;
+    private final TeachersRepository personRepository;
 
     @Autowired
-    public RegistrationService(PasswordEncoder passwordEncoder, SecurityPersonRepository personRepository) {
+    public RegistrationService(PasswordEncoder passwordEncoder, TeachersRepository personRepository) {
         this.passwordEncoder = passwordEncoder;
         this.personRepository = personRepository;
     }
 
     @Transactional
-    public void register(SecurityPerson person, String keyFromForm) throws IncorrectKeyException {
+    public void register(Teacher person, String keyFromForm) throws IncorrectKeyException {
         person.setUserPassword(passwordEncoder.encode(person.getUserPassword()));
         person.setRole("ROLE_USER");
         if (isCheckingKey(person, keyFromForm)) {
@@ -38,8 +38,8 @@ public class RegistrationService {
         }
     }
 
-    private boolean isCheckingKey(SecurityPerson person, String keyFromForm) {
-        String encoded = person.getUserName() + " " + "ПК33";
+    private boolean isCheckingKey(Teacher person, String keyFromForm) {
+        String encoded = person.getTeacherName() + " " + "ПК33";
         String coded = DigestUtils.sha256Hex(encoded);
 
         return coded.equals(keyFromForm);

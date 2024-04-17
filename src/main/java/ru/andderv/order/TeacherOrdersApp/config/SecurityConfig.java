@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import ru.andderv.order.TeacherOrdersApp.services.SecurityPersonService;
+import ru.andderv.order.TeacherOrdersApp.services.TeachersService;
 
 /**
  * @author andderV
@@ -19,10 +19,11 @@ import ru.andderv.order.TeacherOrdersApp.services.SecurityPersonService;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private final SecurityPersonService personService;
+//    private final SecurityPersonService personService;
+    private final TeachersService personService;
 
     @Autowired
-    public SecurityConfig(SecurityPersonService personService) {
+    public SecurityConfig(TeachersService personService) {
         this.personService = personService;
     }
 

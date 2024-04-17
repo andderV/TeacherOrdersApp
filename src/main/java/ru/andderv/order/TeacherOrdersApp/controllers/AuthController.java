@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.andderv.order.TeacherOrdersApp.exception.IncorrectKeyException;
-import ru.andderv.order.TeacherOrdersApp.models.SecurityPerson;
+import ru.andderv.order.TeacherOrdersApp.models.Teacher;
 import ru.andderv.order.TeacherOrdersApp.services.RegistrationService;
-import ru.andderv.order.TeacherOrdersApp.util.SecurityPersonValidator;
+import ru.andderv.order.TeacherOrdersApp.util.TeacherUserNameValidator;
 
 /**
  * @author andderV
@@ -22,12 +22,12 @@ import ru.andderv.order.TeacherOrdersApp.util.SecurityPersonValidator;
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final SecurityPersonValidator personValidator;
+    private final TeacherUserNameValidator personValidator;
 
     private final RegistrationService registrationService;
 
 
-    public AuthController(SecurityPersonValidator personValidator, RegistrationService registrationService) {
+    public AuthController(TeacherUserNameValidator personValidator, RegistrationService registrationService) {
         this.personValidator = personValidator;
         this.registrationService = registrationService;
     }
@@ -38,24 +38,24 @@ public class AuthController {
     }
 
     @GetMapping("/registration")
-    public String registrationPage(@ModelAttribute("person") SecurityPerson person) {
+    public String registrationPage(@ModelAttribute("person") Teacher teacher) {
         return "auth/registration";
     }
 
     @PostMapping("/registration")
-    public String performRegistration(@ModelAttribute("person") @Valid SecurityPerson person,
+    public String performRegistration(@ModelAttribute("person") @Valid Teacher teacher,
                                       BindingResult bindingResult,
                                       Model model) {
-        personValidator.validate(person, bindingResult);
+        personValidator.validate(teacher, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "auth/registration";
         }
 
-        String keyFromForm = person.getKey();
+        String keyFromForm = teacher.getKey();
         String exp = "";
         try {
-            registrationService.register(person, keyFromForm);
+            registrationService.register(teacher, keyFromForm);
 
         } catch (IncorrectKeyException e) {
             exp = e.getMessage();

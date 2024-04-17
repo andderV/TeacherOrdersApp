@@ -16,7 +16,8 @@
 <h3>Список продуктов по бюджету</h3>
 
 <a class="btn btn-primary" href="groceries/new" role="button">Добавить новый продукт
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus" viewBox="0 0 16 16">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus"
+         viewBox="0 0 16 16">
         <path d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5"/>
         <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5z"/>
     </svg>
@@ -29,12 +30,12 @@
     <tr>
         <th>Название продукта</th>
         <th>Единица измерения</th>
-<!--        <th>Дополнительная информация</th>-->
+        <!--        <th>Дополнительная информация</th>-->
     </tr>
     </thead>
     <tbody>
     <tr th:each="product:${groceries}">
-        <td> <a href="#" th:href="@{/groceries/{id}(id=${product.getId()})}" th:text="${product.getProductName()}"/></td>
+        <td><a href="#" th:href="@{/groceries/{id}(id=${product.getId()})}" th:text="${product.getProductName()}"/></td>
         <td th:text="${product.getMeasureUnit().getMeasureUnitName()}"/>
     </tr>
     </tbody>
@@ -49,42 +50,72 @@
 <nav aria-label="Page navigation example">
     <ul class="pagination">
         <li class="page-item">
-            <a class="page-link" href="#">Предыдущая</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <span th:if="${page.hasPrevious()}">
+            <a class="page-link" th:href="@{/groceries(page=${page.number-1}, product_per_page=${page.size})}">Предыдущая</a>
+            </span></li>
         <li class="page-item">
-            <a class="page-link" href="#">Следующая</a></li>
+        <span th:if="${!page.hasPrevious()}">
+            <a class="page-link disabled" href="#">Предыдущая</a>
+        </span></li>
+        <li class="page-item"><a class="page-link"
+                                 th:href="@{/groceries(page=${page.number}, product_per_page=${page.size})}">[[${page.number}+1]]</a>
+        </li>
+        <li class="page-item"><a class="page-link"
+                                 th:href="@{/groceries(page=${page.number+1}, product_per_page=${page.size})}">[[${page.number}+2]]</a>
+        </li>
+        <li class="page-item"><a class="page-link"
+                                 th:href="@{/groceries(page=${page.number+2}, product_per_page=${page.size})}">[[${page.number}+3]]</a>
+        </li>
+        <li class="page-item">
+            <span th:if="${page.hasNext()}">
+            <a class="page-link"
+               th:href="@{/groceries(page=${page.number+1}, product_per_page=${page.size})}">Следующая</a>
+            </span>
+        </li>
+        <li class="page-item">
+            <span th:if="${!page.hasNext()}">
+            <a class="page-link disabled"
+               href="#">Следующая</a>
+            </span>
+        </li>
     </ul>
 </nav>
 
 
-
-            <div class="col-sm-1">
-                    <span th:each="i: ${#numbers.sequence(0, totalPages - 1)}">
-      <a th:if="${currentPage != i}" th:href="@{/groceries(page=${i})}">[[${i}]]</a>
-      <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
-                    </span>
-            </div>
-            <div class="col-sm-1">
-                <a th:if="${currentPage < totalPages}" th:href="@{/groceries(page=${currentPage + 1})}">Next</a>
-                <span th:unless="${currentPage < totalPages}">Next</span>
-            </div>
-
-            <div class="col-sm-1">
-                <a th:if="${currentPage < totalPages}" th:href="@{/groceries(page=${totalPages})}">Last</a>
-                <span th:unless="${currentPage < totalPages}">Last</span>
-            </div>
-        </div>
-    </div>
+<div class="pagination-div">
+    <span th:if="${page.hasPrevious()}">
+        <a th:href="@{/groceries(page=${page.number-1},product_per_page=${page.size})}">Previous</a>
+    </span>
+    <th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+        <span th:if="${page.number == i}" class="selected">[[${i}+1]]</span>
+        <span th:unless="${page.number == i}">
+             <a th:href="@{/groceries(page=${i},product_per_page=${page.size})}">[[${i}+1]]</a>
+        </span>
+    </th:block>
+    <span th:if="${page.hasNext()}">
+        <a th:href="@{/groceries(page=${page.number+1},product_per_page=${page.size})}">Next</a>
+    </span>
+</div>
 
 <a th:text="${currentPage}">Текущая страница</a>
 <a th:text="${totalPages}">Всего страниц</a>
 <a th:text="${totalItems}">Всего предметов</a>
 <br>
 
+<span>Показывать по </span>
+
+<!--<label>-->
+<!--    <select>-->
+<!--        <option th:href="@{/groceries?product_per_page=10}">10</option>-->
+<!--        <option th:href="@{/groceries?product_per_page=20}">20</option>-->
+<!--        <option th:href="@{/groceries?product_per_page=50}">50</option>-->
+<!--    </select>-->
+<!--</label>-->
+
 <a th:href="@{/groceries?product_per_page=10}">10</a>
 <a th:href="@{/groceries?product_per_page=20}">20</a>
 <a th:href="@{/groceries?product_per_page=50}">50</a>
+
+<span> записей</span>
 </body>
 </html>

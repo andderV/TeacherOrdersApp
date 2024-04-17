@@ -2,11 +2,15 @@ package ru.andderv.order.TeacherOrdersApp.services;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.andderv.order.TeacherOrdersApp.models.Orders;
 import ru.andderv.order.TeacherOrdersApp.models.Teacher;
 import ru.andderv.order.TeacherOrdersApp.repositories.TeachersRepository;
+import ru.andderv.order.TeacherOrdersApp.security.TeacherDetails;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,7 +23,7 @@ import java.util.Optional;
  */
 @Service
 @Transactional(readOnly = true)
-public class TeachersService {
+public class TeachersService implements UserDetailsService {
     private final TeachersRepository teachersRepository;
 
     @Autowired
@@ -75,4 +79,13 @@ public class TeachersService {
     }
 
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<Teacher> person = teachersRepository.findByUserName(username);
+
+        if(person.isEmpty()){
+            throw new UsernameNotFoundException("User not found!");
+        }
+        return new TeacherDetails(person.get());
+    }
 }
