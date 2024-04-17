@@ -57,7 +57,7 @@
         <span th:if="${!page.hasPrevious()}">
             <a class="page-link disabled" href="#">Предыдущая</a>
         </span></li>
-        <li class="page-item"><a class="page-link"
+        <li class="page-item active" aria-current="page"><a class="page-link"
                                  th:href="@{/groceries(page=${page.number}, product_per_page=${page.size})}">[[${page.number}+1]]</a>
         </li>
         <li class="page-item"><a class="page-link"
