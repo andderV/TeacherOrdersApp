@@ -49,6 +49,9 @@ public class Teacher {
     @Column(name = "user_password")
     @NotEmpty(message = "Пароль не должен быть пустым")
     private String userPassword;
+    @Transient
+    @NotEmpty(message = "Пароль не должен быть пустым")
+    private String confirmUserPassword;
     @Column(name = "role")
     private String role;
     @Transient

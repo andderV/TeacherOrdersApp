@@ -80,13 +80,24 @@
 
                 </div>
                 <div class="form-group">
+                    <label for="confirmPassword">Подтвердите пароль</label>
+
+                    <input type="password" class="form-control" th:field="*{confirmUserPassword}" id="confirmPassword"
+                           placeholder="Введите пароль">
+                    <div style="color: red" th:if="${#fields.hasErrors('confirmUserPassword')}" th:errors="*{confirmUserPassword}">
+                        Password error
+                    </div>
+                    <div style="color: red" th:text="${exceptionPass}"/>
+
+                </div>
+                <div class="form-group">
                     <label for="keyFromForm">Ключ</label>
                     <input type="text" class="form-control" th:field="*{key}" id="keyFromForm"
                            placeholder="Введите ключ">
                     <div style="color: red" th:if="${#fields.hasErrors('key')}" th:errors="*{key}">
                         Key error
                     </div>
-                    <div style="color: red" th:text="${exception}"></div>
+                    <div style="color: red" th:text="${exceptionKey}"></div>
                 </div>
                 <button type="Sign in" class="btn btn-primary btn-block">Добавить пользователя</button>
             </form>

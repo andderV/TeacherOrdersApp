@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.andderv.order.TeacherOrdersApp.exception.IncorrectKeyException;
+import ru.andderv.order.TeacherOrdersApp.exception.IncorrectPasswordException;
 import ru.andderv.order.TeacherOrdersApp.models.Teacher;
 import ru.andderv.order.TeacherOrdersApp.services.RegistrationService;
 import ru.andderv.order.TeacherOrdersApp.util.TeacherUserNameValidator;
@@ -53,13 +54,18 @@ public class AuthController {
         }
 
         String keyFromForm = teacher.getKey();
-        String exp = "";
+        String expKey = "";
+        String expPass = "";
         try {
             registrationService.register(teacher, keyFromForm);
 
         } catch (IncorrectKeyException e) {
-            exp = e.getMessage();
-            model.addAttribute("exception", exp);
+            expKey = e.getMessage();
+            model.addAttribute("exceptionKey", expKey);
+            return "auth/registration";
+        } catch (IncorrectPasswordException e){
+            expPass = e.getMessage();
+            model.addAttribute("exceptionPass", expPass);
             return "auth/registration";
         }
 
