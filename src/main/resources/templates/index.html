@@ -9,6 +9,9 @@
 </head>
 <body>
 <header th:replace="blocks/header :: header"></header>
+<div th:if="${firstNameWithPatronymic}">
+    <h4>Добро пожаловать, <span th:text="${firstNameWithPatronymic}"></span></h4>
+</div>
 <!--<div>-->
 <!--    <a href="/teachers">Преподаватели</a>-->
 <!--    <a href="/groceries">Продукты</a>-->

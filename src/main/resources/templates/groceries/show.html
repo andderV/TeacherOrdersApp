@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
@@ -18,7 +19,7 @@
     <h3>Заказы:</h3>
     <div th:each="order: ${orders}">
         <a th:href="@{/orders/{id}(id=${order.getOrder().getOrderId()})}"
-              th:text="${order.getOrder().getDateOrder()}">User</a>
+           th:text="${order.getOrder().getDateOrder()}">User</a>
     </div>
 </div>
 <br/>
@@ -26,13 +27,15 @@
 
 <hr/>
 
-<form th:method="GET" th:action="@{/groceries/{id}/edit(id=${product.getId()})}">
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <form th:method="GET" th:action="@{/groceries/{id}/edit(id=${product.getId()})}">
 
-    <input type="submit" value="Редактировать продукт">
-</form>
+        <input type="submit" value="Редактировать продукт">
+    </form>
 
-<form th:method="DELETE" th:action="@{/groceries/{id}(id=${product.getId()})}">
-    <input type="submit" value="Удалить продукт"/>
-</form>
+    <form th:method="DELETE" th:action="@{/groceries/{id}(id=${product.getId()})}">
+        <input type="submit" value="Удалить продукт"/>
+    </form>
+</div>
 </body>
 </html>

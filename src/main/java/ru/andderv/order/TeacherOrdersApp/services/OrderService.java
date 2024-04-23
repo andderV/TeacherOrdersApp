@@ -30,7 +30,7 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    public List<Orders>findAllWithSorting(boolean sortByDateOrder){
+    public List<Orders> findAllWithSorting(boolean sortByDateOrder) {
         if (sortByDateOrder) {
             return orderRepository.findAll(Sort.by("dateOrder").descending());
         } else {
@@ -39,7 +39,18 @@ public class OrderService {
 
     }
 
-    public List<OrderResult>findAllByDateOrderBetweenStartAndEnd(Date start, Date end){
+    public List<Orders> findAllByOwnerTeacherIdWithSorting(int teacherId, boolean sortByDateOrder) {
+        if(sortByDateOrder){
+            return orderRepository.findAllByOwnerTeacherId(teacherId, Sort.by("dateOrder").descending());
+
+        } else {
+            return orderRepository.findAllByOwnerTeacherId(teacherId);
+
+        }
+
+    }
+
+    public List<OrderResult> findAllByDateOrderBetweenStartAndEnd(Date start, Date end) {
         return orderRepository.findAllByDateOrderBetweenStartAndEnd(start, end);
     }
 

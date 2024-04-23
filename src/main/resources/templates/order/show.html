@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
@@ -12,20 +13,24 @@
 
 <a th:text="${order.getDateOrder()} + ', ' + ${order.getOwner().getTeacherName()}"></a>
 <br/>
-<form th:method="GET" th:action="@{/item/{id}/edit(id=${order.orderId})}">
-    <button class="btn btn-success rounded-pill px-3" type="submit">
-        <ya-tr-span data-index="1-2" data-translated="true" data-source-lang="en" data-target-lang="ru"
-                    data-value="Success" data-translation="Успех" data-ch="0" data-type="trSpan" data-selected="false">
-            Добавить продукты
-        </ya-tr-span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building-add"
-             viewBox="0 0 16 16">
-            <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0"/>
-            <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1z"/>
-            <path d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
-        </svg>
-    </button>
-</form>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <form th:method="GET" th:action="@{/item/{id}/edit(id=${order.orderId})}">
+        <button class="btn btn-success rounded-pill px-3" type="submit">
+            <ya-tr-span data-index="1-2" data-translated="true" data-source-lang="en" data-target-lang="ru"
+                        data-value="Success" data-translation="Успех" data-ch="0" data-type="trSpan"
+                        data-selected="false">
+                Добавить продукты
+            </ya-tr-span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-building-add"
+                 viewBox="0 0 16 16">
+                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0"/>
+                <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1z"/>
+                <path d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+            </svg>
+        </button>
+    </form>
+</div>
 <div th:if="${!order.getGroceriesItem().isEmpty()}">
     <hr/>
     <h3>Продукты:</h3>
@@ -44,6 +49,7 @@
             <td th:text="${item.quantity}"/>
             <td th:text="${item.grocery.measureUnit.measureUnitName}"/>
             <td>
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
                 <form th:method="DELETE" th:action="@{/item/{id}(id=${item.getProductId()})}">
                     <button class="btn btn-danger rounded-pill px-3" type="submit">
                         <ya-tr-span data-index="1-3" data-translated="true" data-source-lang="en" data-target-lang="ru"
@@ -57,6 +63,7 @@
                         </svg>
                     </button>
                 </form>
+                </div>
             </td>
         </tr>
 
@@ -71,14 +78,14 @@
 <div th:if="${order.getGroceriesItem().isEmpty()}">Этот заказ не содержит ни одного продукта</div>
 
 <hr/>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <form th:method="GET" th:action="@{/orders/{id}/edit(id=${order.getOrderId()})}">
 
-<form th:method="GET" th:action="@{/orders/{id}/edit(id=${order.getOrderId()})}">
-
-    <input type="submit" value="Редактировать заказ">
-</form>
-
-<form th:method="DELETE" th:action="@{/orders/{id}(id=${order.getOrderId()})}">
-    <input type="submit" value="Удалить заказ"/>
-</form>
+        <input type="submit" value="Редактировать заказ">
+    </form>
+    <form th:method="DELETE" th:action="@{/orders/{id}(id=${order.getOrderId()})}">
+        <input type="submit" value="Удалить заказ"/>
+    </form>
+</div>
 </body>
 </html>

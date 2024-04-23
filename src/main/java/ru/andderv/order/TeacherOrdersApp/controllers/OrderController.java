@@ -2,6 +2,8 @@ package ru.andderv.order.TeacherOrdersApp.controllers;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,8 +42,17 @@ public class OrderController {
 
     @GetMapping
     public String index(@RequestParam(value = "sort", required = false, defaultValue = "true") Boolean sort,
-                        Model model) {
-        model.addAttribute("orders", orderService.findAllWithSorting(sort));
+                        Model model,
+                        Authentication auth) {
+        String role = auth.getAuthorities().toString();
+        String name = auth.getName();
+        Teacher teacher = teachersService.findTeacherByUserName(name);
+        if (role.contains("ROLE_ADMIN")) {
+            model.addAttribute("orders", orderService.findAllWithSorting(sort));
+        } else if (role.contains("ROLE_USER")){
+            model.addAttribute("orders",
+                    orderService.findAllByOwnerTeacherIdWithSorting(teacher.getTeacherId(), sort));
+        }
         return "order/index";
     }
 
@@ -56,15 +67,21 @@ public class OrderController {
     @PatchMapping("/{id}/update")
     public String updateQuantity(@PathVariable("id") int id,
                                  @ModelAttribute("order") Orders orders,
-                                 Model model){
+                                 Model model) {
         model.addAttribute("groceryItem", groceryItemService.groceryItemList(orderService.findById(id)));
         return "redirect:";
     }
 
     @GetMapping("/new")
     public String newOrder(@ModelAttribute("order") Orders order, @ModelAttribute("owner") Teacher teacher,
-                           Model model) {
-        model.addAttribute("teachers", teachersService.findAll());
+                           Model model, Authentication auth) {
+        String role = auth.getAuthorities().toString();
+        Teacher user = teachersService.findTeacherByUserName(auth.getName());
+        if (role.contains("ROLE_ADMIN")) {
+            model.addAttribute("teachers", teachersService.findAll());
+        } else if (role.contains("ROLE_USER")){
+            model.addAttribute("teachers", teachersService.findById(user.getTeacherId()));
+        }
         return "order/new";
     }
 

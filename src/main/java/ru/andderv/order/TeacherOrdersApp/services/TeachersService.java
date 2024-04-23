@@ -60,6 +60,11 @@ public class TeachersService implements UserDetailsService {
         return teacher.orElse(null);
     }
 
+    public Teacher findTeacherByUserName(String userName){
+        Optional<Teacher> teacher = teachersRepository.findTeacherByUserName(userName);
+        return teacher.orElse(null);
+    }
+
     public Teacher findTeacherByEmail(String email){
         return teachersRepository.findTeacherByEmail(email).orElse(null);
     }
