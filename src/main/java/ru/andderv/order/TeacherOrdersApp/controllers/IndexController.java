@@ -24,13 +24,16 @@ public class IndexController {
         this.teachersService = teachersService;
     }
 
-    @GetMapping("")
+    @GetMapping
     public String index(Model model, Authentication auth){
         String userName = auth.getName();
         Teacher teacher = teachersService.findTeacherByUserName(userName);
         String[] str = teacher.getTeacherName().split(" ");
         StringBuilder firstNameWithPatronymic = new StringBuilder();
-        firstNameWithPatronymic.append(str[1]).append(" ").append(str[2]);
+        for (int i = 1; i < str.length; i++) {
+            firstNameWithPatronymic.append(str[i]).append(" ");
+        }
+        firstNameWithPatronymic.trimToSize();
         model.addAttribute("firstNameWithPatronymic", firstNameWithPatronymic);
         return "index";
     }

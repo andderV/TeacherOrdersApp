@@ -25,14 +25,14 @@
 <div th:if="${teacher.getOrdersList().isEmpty()}">У преподавателя нет ни одного заказа</div>
 
 <hr/>
-<div sec:authorize="hasRole('ROLE_ADMIN')">
-<form th:method="GET" th:action="@{/teachers/{id}/edit(id=${teacher.getTeacherId()})}">
+<!--<div sec:authorize="hasRole('ROLE_ADMIN')">-->
+<!--<form th:method="GET" th:action="@{/teachers/{id}/edit(id=${teacher.getTeacherId()})}">-->
 
-    <input type="submit" value="Редактировать преподавателя">
-</form>
-<form th:method="DELETE" th:action="@{/teachers/{id}(id=${teacher.getTeacherId()})}">
-    <input type="submit" value="Удалить преподавателя"/>
-</form>
-</div>
+<!--    <input type="submit" value="Редактировать преподавателя">-->
+<!--</form>-->
+<!--<form th:method="DELETE" th:action="@{/teachers/{id}(id=${teacher.getTeacherId()})}">-->
+<!--    <input type="submit" value="Удалить преподавателя"/>-->
+<!--</form>-->
+<!--</div>-->
 </body>
 </html>

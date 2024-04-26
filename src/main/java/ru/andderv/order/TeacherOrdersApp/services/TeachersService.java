@@ -2,6 +2,7 @@ package ru.andderv.order.TeacherOrdersApp.services;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -33,6 +34,14 @@ public class TeachersService implements UserDetailsService {
 
     public List<Teacher> findAll() {
         return teachersRepository.findAll();
+    }
+
+    public List<Teacher> findAllWithSorting(boolean sortByTeacherName){
+        if (sortByTeacherName){
+            return teachersRepository.findAll(Sort.by("teacherName"));
+        } else {
+           return teachersRepository.findAll();
+        }
     }
 
     public Teacher findById(int id) {

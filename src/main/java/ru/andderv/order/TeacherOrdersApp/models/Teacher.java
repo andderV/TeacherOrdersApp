@@ -1,10 +1,7 @@
 package ru.andderv.order.TeacherOrdersApp.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.util.List;
@@ -50,12 +47,10 @@ public class Teacher {
     @NotEmpty(message = "Пароль не должен быть пустым")
     private String userPassword;
     @Transient
-    @NotEmpty(message = "Пароль не должен быть пустым")
     private String confirmUserPassword;
     @Column(name = "role")
     private String role;
     @Transient
-    @NotEmpty(message = "Ключ не может быть пустым")
     private String key;
 
     public Teacher(String teacherName, String email, String phoneNumber, String userName, String userPassword, String role) {

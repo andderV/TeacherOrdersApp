@@ -40,48 +40,48 @@ public class TeacherController {
         return "teachers/show";
     }
 
-    @GetMapping("/new")
-    public String newTeacher(@ModelAttribute("teacher") Teacher teacher){
-        return "teachers/new";
-    }
+//    @GetMapping("/new")
+//    public String newTeacher(@ModelAttribute("teacher") Teacher teacher){
+//        return "teachers/new";
+//    }
+//
+//    @PostMapping
+//    public String create(@ModelAttribute("teacher") @Valid Teacher teacher,
+//                         BindingResult bindingResult){
+//
+//        teacherValidator.validate(teacher, bindingResult);
+//
+//        if (bindingResult.hasErrors()){
+//            return "teachers/new";
+//        }
+//        teachersService.save(teacher);
+//        return "redirect:/teachers";
+//    }
 
-    @PostMapping
-    public String create(@ModelAttribute("teacher") @Valid Teacher teacher,
-                         BindingResult bindingResult){
-
-        teacherValidator.validate(teacher, bindingResult);
-
-        if (bindingResult.hasErrors()){
-            return "teachers/new";
-        }
-        teachersService.save(teacher);
-        return "redirect:/teachers";
-    }
-
-    @GetMapping("/{id}/edit")
-    public String edit(Model model, @PathVariable("id") int id){
-        model.addAttribute("teacher", teachersService.findById(id));
-        return "teachers/edit";
-    }
-
-    @PatchMapping("/{id}")
-    public String update(@ModelAttribute("teacher") @Valid Teacher teacher,
-                         BindingResult bindingResult,
-                         @PathVariable("id") int id){
-
-        if (bindingResult.hasErrors()){
-            return "teachers/edit";
-        }
-
-        teachersService.update(id, teacher);
-        return "redirect:/teachers";
-    }
-
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id){
-        teachersService.delete(id);
-        return "redirect:/teachers";
-    }
+//    @GetMapping("/{id}/edit")
+//    public String edit(Model model, @PathVariable("id") int id){
+//        model.addAttribute("teacher", teachersService.findById(id));
+//        return "teachers/edit";
+//    }
+//
+//    @PatchMapping("/{id}")
+//    public String update(@ModelAttribute("teacher") @Valid Teacher teacher,
+//                         BindingResult bindingResult,
+//                         @PathVariable("id") int id){
+//
+//        if (bindingResult.hasErrors()){
+//            return "teachers/edit";
+//        }
+//
+//        teachersService.update(id, teacher);
+//        return "redirect:/teachers";
+//    }
+//
+//    @DeleteMapping("/{id}")
+//    public String delete(@PathVariable("id") int id){
+//        teachersService.delete(id);
+//        return "redirect:/teachers";
+//    }
 
 
 }

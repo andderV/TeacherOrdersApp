@@ -41,6 +41,17 @@ public class RegistrationService {
         }
 
     }
+    @Transactional
+    public void update(int id, Teacher updatePerson) throws IncorrectPasswordException {
+        updatePerson.setTeacherId(id);
+        updatePerson.setUserPassword(passwordEncoder.encode(updatePerson.getUserPassword()));
+        if (isConfirmPassword(updatePerson)) {
+            personRepository.save(updatePerson);
+            } else {
+            throw new IncorrectPasswordException("Пароли не совпадают");
+        }
+
+    }
 
     private boolean isCheckingKey(Teacher person, String keyFromForm) {
         String fullKey = person.getTeacherName() + " " + "ПК33";
