@@ -13,7 +13,17 @@
 <form th:method="POST" th:action="@{/units}" th:object="${unit}">
     <label for="name">Введите название единицы измерения: </label>
     <input type="text" th:field="*{measureUnitName}" id="name">
-    <div style="color: red" th:if="${#fields.hasErrors('measureUnitName')}" th:errors="*{measureUnitName}">Name error</div>
+    <div style="color: red" th:if="${#fields.hasErrors('measureUnitName')}" th:errors="*{measureUnitName}">Name error
+    </div>
+    <br/>
+    <label for="group">Выберите группу</label>
+    <select th:object="${group}" th:field="*{id}" id="group">
+                <option th:each="gr:${groups}" th:value="${gr.getId()}"
+                        th:text="${gr.getGroupName()}"></option>
+            </select>
+    <label for="ratio">Укажите коэффициент: </label>
+    <input type="text" th:field="*{ratio}" id="ratio">
+    <div style="color: red" th:if="${#fields.hasErrors('ratio')}" th:errors="*{ratio}">Ratio error</div>
     <br/>
     <input type="submit" value="Создать!">
 </form>

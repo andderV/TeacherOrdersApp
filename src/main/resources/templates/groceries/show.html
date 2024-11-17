@@ -12,7 +12,8 @@
 <body>
 <header th:replace="blocks/header :: header"></header>
 
-<a th:text="${product.getProductName()} + ' ' + ${product.getMeasureUnit().getMeasureUnitName()}"></a>
+<a th:text="${product.getProductName()} + ', ' + ${unit.measureUnitName}"></a>
+<!--<a th:text="${product.getProductName()} + ' ' + ${product.getMeasureUnit().getMeasureUnitName()}"></a>-->
 <br/>
 <div th:if="${!orders.isEmpty()}">
     <hr/>
@@ -25,7 +26,11 @@
 <br/>
 <div th:if="${orders.isEmpty()}">Этого продукта нет ни в одном заказе</div>
 
-<hr/>
+
+<form th:method="GET" th:action="@{/groceriesMU/{id}(id=${product.getId()})}">
+
+    <input type="submit" value="Список ед.изм.">
+</form>
 
 <div sec:authorize="hasRole('ROLE_ADMIN')">
     <form th:method="GET" th:action="@{/groceries/{id}/edit(id=${product.getId()})}">

@@ -6,8 +6,8 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author andderV
@@ -26,25 +26,36 @@ public class Groceries {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private int id;
+
     @NotEmpty(message = "Поле не должно быть пустым")
     @Size(min = 2, max = 50, message = "Название продукта не может быть меньше 2 и больше 50 символов")
     @Column(name = "product_name")
     private String productName;
 
-//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-//    @JoinTable(name = "groceries_orders",
-//            joinColumns = @JoinColumn(name = "product_id"),
-//            inverseJoinColumns = @JoinColumn(name = "order_id"))
-//    private List<Orders> ordersGroceriesList;
-
     @OneToMany(mappedBy = "grocery")
     @Cascade({org.hibernate.annotations.CascadeType.PERSIST,
             org.hibernate.annotations.CascadeType.MERGE})
-    private List<GroceryItem>groceriesItem;
+    private List<GroceryItem> groceriesItem;
 
-    @ManyToOne
-    @JoinColumn(name = "measure_unit_id", referencedColumnName = "measure_unit_id")
-    private MeasureUnit measureUnit;
+    @OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    private List<OrdersToSuppliersGrocery> orders;
+
+    @OneToMany(mappedBy = "product", cascade = {CascadeType.ALL})
+    private List<ContractsGroceries> contractsGroceries;
+
+    @ToString.Exclude
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(
+            name = "groceries_measure_unit",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "measure_unit_id"))
+    private List<MeasureUnit> measureUnits = new ArrayList<>();
+
+    @OneToMany(mappedBy = "groceries", cascade = {CascadeType.ALL})
+    private List<GroceriesMeasureUnit>groceriesMeasureUnitList;
+
+    @Transient
+    private String nameBasicUnit;
 
     public Groceries(String productName) {
         this.productName = productName;

@@ -25,7 +25,7 @@
     <tbody>
     <tr th:each="item:${fullListItem}">
         <td><a href="#" th:href="@{/groceries/{id}(id=${item.grocery.id})}" th:text="${item.grocery.productName}"/></td>
-        <td th:text="${item.grocery.measureUnit.measureUnitName}"/>
+        <td th:text="${item.grocery.measureUnits}"/>
         <td th:text="${item.quantity}"/>
     </tr>
 

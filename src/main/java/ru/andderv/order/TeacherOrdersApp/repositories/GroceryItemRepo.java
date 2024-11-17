@@ -21,12 +21,14 @@ public interface GroceryItemRepo extends JpaRepository<GroceryItem, Integer> {
     List<GroceryItem> findByOrder(Orders orders);
 
     @Query("SELECT new ru.andderv.order.TeacherOrdersApp.models.Result(gi.grocery.productName, " +
-           "sum(gi.quantity), gi.grocery.measureUnit.measureUnitName, gi.grocery.id) " +
+//           "sum(gi.quantity), gi.grocery.measureUnit.measureUnitName, gi.grocery.id) " +
+           "sum(gi.quantity), gi.grocery.id) " +
            "from GroceryItem as gi group by gi.grocery.productName order by gi.grocery.productName asc")
     List<Result> sumTotalGroceryItemByGrocery();
 
     @Query("SELECT new ru.andderv.order.TeacherOrdersApp.models.Result(gi.grocery.productName, " +
-           "sum(gi.quantity), gi.grocery.measureUnit.measureUnitName, gi.grocery.id) " +
+//           "sum(gi.quantity),gi.grocery.measureUnit.measureUnitName, gi.grocery.id) " +
+           "sum(gi.quantity), gi.grocery.id) " +
            "from GroceryItem as gi where gi.order.dateOrder between :start AND :end " +
            "group by gi.grocery.productName order by gi.grocery.productName asc")
     List<Result> sumTotalGroceryItemByGroceryWithDateBetween(@Param("start") Date start, @Param("end") Date end);

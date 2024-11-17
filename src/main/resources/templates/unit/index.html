@@ -22,12 +22,16 @@
     <thead>
     <tr>
         <th>Наименование</th>
+        <th>Коэффициент</th>
+        <th>Группа</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="unit:${measureUnit}">
         <td><a th:href="@{/units/{id}(id=${unit.getMeasureUnitId()})}"
                th:text="${unit.getMeasureUnitName()}"/></td>
+        <td th:text="${unit.getRatio()}"></td>
+        <td th:text="${unit.getGroup().getGroupName()}"></td>
     </tr>
     </tbody>
 </table>

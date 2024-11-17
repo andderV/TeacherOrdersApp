@@ -4,19 +4,15 @@ import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.andderv.order.TeacherOrdersApp.models.Groceries;
-import ru.andderv.order.TeacherOrdersApp.models.GroceryItem;
-import ru.andderv.order.TeacherOrdersApp.models.Orders;
+import ru.andderv.order.TeacherOrdersApp.controllers.ProductController;
+import ru.andderv.order.TeacherOrdersApp.models.*;
 import ru.andderv.order.TeacherOrdersApp.repositories.GroceriesRepository;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author andderV
@@ -50,8 +46,8 @@ public class GroceriesService {
 
     }
 
-    public Page<Groceries> findAll(int pageNumber, int pageSize, boolean sortByProductName){
-        if (sortByProductName){
+    public Page<Groceries> findAll(int pageNumber, int pageSize, boolean sortByProductName) {
+        if (sortByProductName) {
             return groceriesRepository.findAll(PageRequest.of(pageNumber, pageSize, Sort.by("productName")));
         } else {
             return groceriesRepository.findAll(PageRequest.of(pageNumber, pageSize));
@@ -93,15 +89,34 @@ public class GroceriesService {
         }
     }
 
-//    public String getMeasureUnitByProductId(int id){
-//        Optional<Groceries>found = groceriesRepository.findById(id);
-//        if(found.isPresent()){
-//            Optional<MeasureUnit>foundUnit = Optional.ofNullable(found.get().getMeasureUnit());
-//            if(foundUnit.isPresent()){
-//                return foundUnit.get().getMeasureUnitName();
-//            }
-//        }
-//        return "единица измерения не определена";
-//    }
+    public List<ContractsGroceries> getContractsByProductId(int id) {
+        Optional<Groceries> optionalProduct = groceriesRepository.findById(id);
+        if (optionalProduct.isPresent()) {
+            Hibernate.initialize(optionalProduct.get().getContractsGroceries());
+            return optionalProduct.get().getContractsGroceries();
+        } else {
+            return Collections.emptyList();
+        }
+    }
+
+    public List<OrdersToSuppliersGrocery> getOrdersToSuppliersByProductId(int id){
+        Optional<Groceries> optionalProduct = groceriesRepository.findById(id);
+        if (optionalProduct.isPresent()) {
+            Hibernate.initialize(optionalProduct.get().getOrders());
+            return optionalProduct.get().getOrders();
+        } else {
+            return Collections.emptyList();
+        }
+    }
+
+    public List<MeasureUnit> getMeasureUnitsByProductId(int id) {
+        Optional<Groceries> optionalProduct = groceriesRepository.findById(id);
+        if (optionalProduct.isPresent()) {
+            Hibernate.initialize(optionalProduct.get().getMeasureUnits());
+            return optionalProduct.get().getMeasureUnits();
+        } else {
+            return Collections.emptyList();
+        }
+    }
 
 }

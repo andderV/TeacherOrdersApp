@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
+
+    <title>Страница контракта</title>
+</head>
+<body>
+<header th:replace="blocks/header :: header"></header>
+
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Название поставщика</th>
+        <th>Номер контракта</th>
+        <th>Сумма контракта</th>
+        <th>Дата начала</th>
+        <th>Дата окончания</th>
+        <!--        <th>Дополнительная информация</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${contract.getProvider().getProviderName()}"/>
+        <td th:text="${contract.getContractName()}"/>
+        <td th:text="${contract.getSum()}"/>
+        <td th:text="${#dates.format(contract.getDateStart(), 'dd-MM-yyyy')}"/>
+        <td th:text="${#dates.format(contract.getDateEnd(), 'dd-MM-yyyy')}"/>
+
+        <td>
+            <div sec:authorize="hasRole('ROLE_ADMIN')">
+                <form th:method="GET" th:action="@{/contracts/{id}/edit(id=${contract.getContractId()})}">
+
+                    <input type="submit" value="Редактировать контракт">
+                </form>
+
+                <form th:method="DELETE" th:action="@{/contracts/{id}(id=${contract.getContractId()})}">
+                    <input type="submit" value="Удалить контракт"/>
+                </form>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <form th:method="GET" th:action="@{/cGroceries/{id}/edit(id=${contract.getContractId()})}">
+        <button class="btn btn-success rounded-pill px-3" type="submit">
+            <ya-tr-span data-index="1-2" data-translated="true" data-source-lang="en" data-target-lang="ru"
+                        data-value="Success" data-translation="Успех" data-ch="0" data-type="trSpan"
+                        data-selected="false">
+                Добавить продукты
+            </ya-tr-span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-building-add"
+                 viewBox="0 0 16 16">
+                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0"/>
+                <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1z"/>
+                <path d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+            </svg>
+        </button>
+    </form>
+</div>
+
+<div th:if="${!contractGroceries.isEmpty()}">
+    <hr/>
+    <h3>Продукты:</h3>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Наименование продукта</th>
+            <th>Ед.изм.</th>
+            <th>Цена за ед.изм.</th>
+            <th>Количество бюджет</th>
+            <th>Количество внебюджет</th>
+            <th>Сумма бюджет</th>
+            <th>Сумма внебюджет</th>
+            <!--        <th>Дополнительная информация</th>-->
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product: ${contractGroceries}">
+            <td th:href="@{/groceries/{id}(id=${product.getContract().getContractId()})}"
+                th:text="${product.getProduct()}">User</td>
+            <td th:text="${product.getMeasureUnit()}"/>
+            <td th:text="${product.getPrice()}"/>
+            <td th:text="${product.getQuantityBudget()}"/>
+            <td th:text="${product.getQuantityOffBudget()}"/>
+            <td th:text="${product.getSumBudget()}"/>
+            <td th:text="${product.getSumOffBudget()}"/>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+<div th:if="${contractGroceries.isEmpty()}">В этом контракте нет продуктов</div>
+
+</body>
+</html>

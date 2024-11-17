@@ -47,7 +47,7 @@
         <tr th:each="item :${groceryItem}">
             <td th:text="${item.grocery.productName}"/>
             <td th:text="${item.quantity}"/>
-            <td th:text="${item.grocery.measureUnit.measureUnitName}"/>
+            <td th:text="${item.grocery.measureUnits.stream().findFirst().orElse('')}"/>
             <td>
                 <div sec:authorize="hasRole('ROLE_ADMIN')">
                 <form th:method="DELETE" th:action="@{/item/{id}(id=${item.getProductId()})}">

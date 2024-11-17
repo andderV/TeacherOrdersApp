@@ -2,8 +2,10 @@ package ru.andderv.order.TeacherOrdersApp.services;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.andderv.order.TeacherOrdersApp.models.ContractsGroceries;
 import ru.andderv.order.TeacherOrdersApp.models.Groceries;
 import ru.andderv.order.TeacherOrdersApp.models.MeasureUnit;
 import ru.andderv.order.TeacherOrdersApp.models.Orders;
@@ -13,6 +15,7 @@ import ru.andderv.order.TeacherOrdersApp.repositories.MeasureUnitRepository;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author andderV
@@ -58,15 +61,22 @@ public class MeasureUnitService {
         return product.orElse(null);
     }
 
-    public List<Groceries> getProductByMeasureUnitId(int id) {
-        Optional<MeasureUnit> optionalMeasureUnit = measureUnitRepository.findById(id);
-        if (optionalMeasureUnit.isPresent()) {
-            Hibernate.initialize(optionalMeasureUnit.get().getGroceriesMeasureUnitList());
-            return optionalMeasureUnit.get().getGroceriesMeasureUnitList();
+    public List<MeasureUnit> findAllWithSorting(boolean sortByGroupName) {
+        if (sortByGroupName){
+            return measureUnitRepository.findAll(Sort.by("group.groupName"));
         } else {
-            return Collections.emptyList();
+            return measureUnitRepository.findAll();
         }
     }
 
+    public Set<MeasureUnit> findMeasureUnitsByGroceriesId(Integer groceriesId) {
+        Optional<Set<MeasureUnit>> set = measureUnitRepository.findMeasureUnitsByGroceriesId(groceriesId);
+        return set.orElse(null);
+    }
+
+    public MeasureUnit findMeasureUnitByGroupIdAndRatioIs(int groupId, float ratio) {
+        Optional<MeasureUnit> unit = measureUnitRepository.findMeasureUnitByGroupIdAndRatioIs(groupId, ratio);
+        return unit.orElse(null);
+    }
 
 }

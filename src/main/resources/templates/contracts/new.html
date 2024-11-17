@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
+
+    <title>Новый контракт</title>
+</head>
+<body>
+<header th:replace="blocks/header :: header"></header>
+
+<form th:method="POST" th:action="@{/contracts}" th:object="${contract}">
+    <label for="name">Введите номер контракта: </label>
+    <input type="text" th:field="*{contractName}" id="name">
+    <div style="color: red" th:if="${#fields.hasErrors('contractName')}" th:errors="*{contractName}">Name error</div>
+    <br/>
+    <label for="dateS">Выберите дату начала действия контракта: </label>
+    <input type="date" th:field="*{dateStart}" id="dateS">
+    <div style="color: red" th:if="${#fields.hasErrors('dateStart')}" th:errors="*{dateStart}">Date error</div>
+    <br/>
+    <label for="dateE">Выберите дату окончания действия контракта: </label>
+    <input type="date" th:field="*{dateEnd}" id="dateE">
+    <div style="color: red" th:if="${#fields.hasErrors('dateEnd')}" th:errors="*{dateEnd}">Date error</div>
+    <br/>
+    <label for="sum">Введите сумму контракта: </label>
+    <input type="text" th:field="*{sum}" id="sum">
+    <br/>
+    <label for="provider">Выберите поставщика:</label>
+    <select th:object="${provider}" th:field="*{providerId}" id="provider">
+        <option th:each="pr: ${providers}" th:value="${pr.providerId}"
+                th:text="${pr.getProviderName()}">
+        </option>
+    </select>
+    <input type="submit" value="Добавить новый контракт">
+</form>
+</body>
+</html>

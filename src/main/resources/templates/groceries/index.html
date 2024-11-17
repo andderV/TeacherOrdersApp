@@ -13,7 +13,7 @@
 <body>
 <header th:replace="blocks/header :: header"></header>
 
-<h3>Список продуктов по бюджету</h3>
+<h3>Список продуктов</h3>
 
 <a class="btn btn-primary" href="groceries/new" role="button">Добавить новый продукт
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus"
@@ -35,8 +35,9 @@
     </thead>
     <tbody>
     <tr th:each="product:${groceries}">
-        <td><a href="#" th:href="@{/groceries/{id}(id=${product.getId()})}" th:text="${product.getProductName()}"/></td>
-        <td th:text="${product.getMeasureUnit().getMeasureUnitName()}"/>
+        <td><a href="#" th:href="@{/groceries/{id}(id=${product.productId})}" th:text="${product.productName}"/></td>
+        <td th:text="${product.basicUnit.measureUnitName}">
+        </td>
     </tr>
     </tbody>
 

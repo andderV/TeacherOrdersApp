@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
+    <title>Страница группы</title>
+</head>
+<body>
+<header th:insert="blocks/header :: header"></header>
+
+<a th:text="${group.getGroupName()}"></a>
+<br/>
+<div th:if="${!units.isEmpty()}">
+    <hr/>
+    <h3>Единицы измерения:</h3>
+    <div th:each="un: ${units}">
+        <span th:text="${un.measureUnitName}"
+        >User</span>
+    </div>
+</div>
+<br/>
+<div th:if="${units.isEmpty()}">В этой группе нет единиц измерения</div>
+
+<hr/>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <form th:method="GET" th:action="@{/groups/{id}/edit(id=${group.getId()})}">
+
+        <input type="submit" value="Редактировать">
+    </form>
+
+    <form th:method="DELETE" th:action="@{/groups/{id}(id=${group.getId()})}">
+        <input type="submit" value="Удалить"/>
+    </form>
+</div>
+</body>
+</html>

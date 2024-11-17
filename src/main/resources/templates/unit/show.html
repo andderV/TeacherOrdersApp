@@ -13,16 +13,16 @@
 
 <a th:text="${unit.getMeasureUnitName()}"></a>
 <br/>
-<div th:if="${!units.isEmpty()}">
+<div th:if="${!groceries.isEmpty()}">
     <hr/>
     <h3>Продукты:</h3>
-    <div th:each="product: ${units}">
+    <div th:each="product: ${groceries}">
         <span th:text="${product.getProductName()}"
         >User</span>
     </div>
 </div>
 <br/>
-<div th:if="${units.isEmpty()}">Этой единицы измерения нет ни в одном продукте</div>
+<div th:if="${groceries.isEmpty()}">Эта единица измерения ещё нигде не используется</div>
 
 <hr/>
 <div sec:authorize="hasRole('ROLE_ADMIN')">

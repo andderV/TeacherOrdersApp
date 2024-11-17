@@ -20,7 +20,7 @@
     <label for="grocery">Выберите продукт:</label>
     <select th:object="${product}" th:field="*{id}" id="grocery">
         <option th:each="grocery:${groceries}" th:value="${grocery.id}"
-                th:text="${grocery.productName} + ' ' + ${grocery.measureUnit.measureUnitName}"></option>
+                th:text="${grocery.productName} + ' ' + ${grocery.measureUnits.stream.findFirst().get()}"></option>
     </select>
     <label for="quantity">Введите количество</label>
     <input type="text" th:field="*{quantity}" id="quantity">

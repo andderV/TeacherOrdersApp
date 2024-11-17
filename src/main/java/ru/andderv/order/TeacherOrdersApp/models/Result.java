@@ -19,24 +19,24 @@ import java.util.Date;
 public class Result{
     private String productName;
     private double quantity;
-    private String measureUnitName;
+//    private String measureUnitName;
     private int groceryId;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date start;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date end;
 
-    public Result(String productName, double quantity, String measureUnitName, int groceryId) {
+    public Result(String productName, double quantity, int groceryId) {
         this.productName = productName;
         this.quantity = quantity;
-        this.measureUnitName = measureUnitName;
+//        this.measureUnitName = measureUnitName;
         this.groceryId = groceryId;
     }
 
-    public Result(String productName, double quantity, String measureUnitName, int groceryId, Date start, Date end) {
+    public Result(String productName, double quantity, int groceryId, Date start, Date end) {
         this.productName = productName;
         this.quantity = quantity;
-        this.measureUnitName = measureUnitName;
+//        this.measureUnitName = measureUnitName;
         this.groceryId = groceryId;
         this.start = start;
         this.end = end;
