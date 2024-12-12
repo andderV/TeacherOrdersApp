@@ -51,6 +51,7 @@ public class Groceries {
             inverseJoinColumns = @JoinColumn(name = "measure_unit_id"))
     private List<MeasureUnit> measureUnits = new ArrayList<>();
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "groceries", cascade = {CascadeType.ALL})
     private List<GroceriesMeasureUnit>groceriesMeasureUnitList;
 

@@ -45,8 +45,12 @@ public class MeasureUnit {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "measureUnits", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Groceries> groceries = new ArrayList<>();
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "measureUnit", cascade = CascadeType.ALL)
     private List<GroceriesMeasureUnit>groceriesMeasureUnitList;
+
+    @OneToMany(mappedBy = "measureUnit", cascade = CascadeType.ALL)
+    private List<ContractsGroceries> contractsGroceries;
 
     public MeasureUnit(String measureUnit) {
         this.measureUnitName = measureUnit;

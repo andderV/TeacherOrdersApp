@@ -29,8 +29,8 @@
     <tbody>
     <tr th:each="cGro:${fullListItem}">
         <td><a href="#" th:href="@{/cGroceries/{id}(id=${cGro.getId()})}" th:text="${cGro.getContract().getContractName()}"/></td>
-        <td th:text="${cGro.getProduct()}"/>
-        <td th:text="${cGro.getMeasureUnit()}"/>
+        <td th:text="${cGro.getProduct().getProductName()}"/>
+        <td th:text="${cGro.getMeasureUnit().getMeasureUnitName()}"/>
         <td th:text="${cGro.getQuantityBudget()}"/>
         <td th:text="${cGro.getQuantityOffBudget()}"/>
         <td th:text="${cGro.getPrice()}"/>
@@ -42,14 +42,11 @@
 
 </table>
 
-<!--<a th:href="@{/groceries/{id}(id=${product.getId()})}"-->
-<!--   th:text="${product.getProductName()} + ', ' + ${product.getMeasureUnit().getMeasureUnitName()}">Product</a>-->
-<!--</div>-->
 <br/>
 <hr/>
 
 <div sec:authorize="hasRole('ROLE_ADMIN')">
-<form th:method="GET" th:action="@{/cGroceries/{id}/edit(id=${item.getId()})}">
+<form th:method="GET" th:action="@{/contractsGroceries/{id}/edit(id=${item.getId()})}">
     <input type="submit" value="Редактировать табличную часть">
 </form>
 </div>

@@ -21,19 +21,20 @@ public class ContractsGroceries {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @NotNull
+//    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contract_id", referencedColumnName = "contract_id", nullable = false)
     private Contracts contract;
 
-    @NotNull
+//    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", referencedColumnName = "product_id", nullable = false)
     private Groceries product;
 
-    @NotNull
-    @Column(name = "measure_unit_id")
-    private int measureUnitId;
+//    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "measure_unit_id", referencedColumnName = "measure_unit_id")
+    private MeasureUnit measureUnit;
 
     @NotNull
     @Column(name = "quantity_budget", nullable = false, precision = 4, scale = 2)
@@ -43,16 +44,20 @@ public class ContractsGroceries {
     @Column(name = "quantity_offbudget", nullable = false, precision = 4, scale = 2)
     private BigDecimal quantityOffBudget;
 
-    @NotNull
+//    @NotNull
     @Column(name = "price", nullable = false, precision = 6, scale = 2)
     private BigDecimal price;
 
-    @NotNull
+//    @NotNull
+//    @Transient
+    @org.hibernate.annotations.Generated
     @ColumnDefault("(`quantity_budget` * `price`)")
     @Column(name = "sum_budget", nullable = false, precision = 8, scale = 2)
     private BigDecimal sumBudget;
 
-    @NotNull
+//    @NotNull
+//    @Transient
+    @org.hibernate.annotations.Generated
     @ColumnDefault("(`quantity_offbudget` * `price`)")
     @Column(name = "sum_offbudget", nullable = false, precision = 8, scale = 2)
     private BigDecimal sumOffBudget;

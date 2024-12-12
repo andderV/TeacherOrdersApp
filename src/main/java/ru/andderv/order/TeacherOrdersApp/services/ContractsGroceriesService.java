@@ -3,10 +3,7 @@ package ru.andderv.order.TeacherOrdersApp.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.andderv.order.TeacherOrdersApp.models.Contracts;
-import ru.andderv.order.TeacherOrdersApp.models.ContractsGroceries;
-import ru.andderv.order.TeacherOrdersApp.models.GroceryItem;
-import ru.andderv.order.TeacherOrdersApp.models.Orders;
+import ru.andderv.order.TeacherOrdersApp.models.*;
 import ru.andderv.order.TeacherOrdersApp.repositories.ContractsGroceriesRepository;
 
 import java.util.List;
@@ -35,6 +32,18 @@ public class ContractsGroceriesService {
 
     public List<ContractsGroceries> groceryItemList(Contracts contracts){
         return repository.findByContract(contracts);
+    }
+
+    public List<ContractsGroceries> groceriesList(Groceries groceries){
+        return repository.findByProduct(groceries);
+    }
+
+    public List<ContractsGroceries> unitList(MeasureUnit measureUnit){
+        return repository.findByMeasureUnit(measureUnit);
+    }
+
+    public List<ContractsGroceries> groceryUnitList(Groceries groceries, MeasureUnit measureUnit){
+        return repository.findAllByProductAndMeasureUnit(groceries, measureUnit);
     }
 
 

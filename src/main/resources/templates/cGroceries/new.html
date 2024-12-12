@@ -11,7 +11,7 @@
 <body>
 <header th:replace="blocks/header :: header"></header>
 
-<form th:method="POST" th:action="@{/cGroceries}" th:object="${cGroceries}">
+<form th:method="POST" th:action="@{/contractGroceries}" th:object="${cGroceries}">
     <label for="contract">Выберите контракт:</label>
     <select th:object="${contract}" th:field="*{contractId}" id="contract">
         <option th:value="${contract.contractId}" th:text="${contract.contractName}"></option>
@@ -23,7 +23,7 @@
     </select>
     <label for="unit">Выберите единицу измерения:</label>
     <select th:object="${unit}" th:field="*{measureUnitId}" id="unit">
-        <option th:each="un:${units}" th:value="${unit.measureUnitId}"
+        <option th:each="un:${units}" th:value="${un.measureUnitId}"
                 th:text="${un.measureUnitName}"></option>
     </select>
     <label for="quantityB">Введите количество бюджет</label>

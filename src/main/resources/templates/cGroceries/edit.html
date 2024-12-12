@@ -12,7 +12,7 @@
 <header th:replace="blocks/header :: header"></header>
 <!--<header th:insert="blocks/header :: header"></header>-->
 
-<form th:method="PATCH" th:action="@{/cGroceries}" th:object="${cGroceries}">
+<form th:method="PATCH" th:action="@{/contractGroceries}" th:object="${cGroceries}">
     <label for="contract">Выберите контракт:</label>
     <select th:object="${contract}" th:field="*{contractId}" id="contract">
         <option th:value="${contract.contractId}" th:text="${contract.contractName}"></option>
@@ -24,7 +24,7 @@
     </select>
     <label for="unit">Выберите единицу измерения:</label>
     <select th:object="${unit}" th:field="*{measureUnitId}" id="unit">
-        <option th:each="un:${units}" th:value="${unit.measureUnitId}"
+        <option th:each="un:${units}" th:value="${un.measureUnitId}"
                 th:text="${un.measureUnitName}"></option>
     </select>
     <label for="quantityB">Введите количество бюджет</label>
@@ -41,6 +41,36 @@
 <div>
     <a th:href="@{/contracts/{id}(id=${contract.getContractId()})}">Вернуться к контракту</a>
 </div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Номер контракта</th>
+        <th>Название продукта</th>
+        <th>Единица измерения</th>
+        <th>Количество бюджет</th>
+        <th>Количество внебюджет</th>
+        <th>Цена</th>
+        <th>Сумма бюджет</th>
+        <th>Сумма внебюджет</th>
+        <!--        <th>Дополнительная информация</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="cGro:${fullListItem}">
+        <td><a href="#" th:href="@{/cGroceries/{id}(id=${cGro.getId()})}" th:text="${cGro.getContract().getContractName()}"/></td>
+        <td th:text="${cGro.getProduct().getProductName()}"/>
+        <td th:text="${cGro.getMeasureUnit().getMeasureUnitName()}"/>
+        <td th:text="${cGro.getQuantityBudget()}"/>
+        <td th:text="${cGro.getQuantityOffBudget()}"/>
+        <td th:text="${cGro.getPrice()}"/>
+        <td th:text="${cGro.getSumBudget()}"/>
+        <td th:text="${cGro.getSumOffBudget()}"/>
+    </tr>
+
+    </tbody>
+
+</table>
 
 </body>
 </html>

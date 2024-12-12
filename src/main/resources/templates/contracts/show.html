@@ -47,7 +47,7 @@
     </tbody>
 </table>
 <div sec:authorize="hasRole('ROLE_ADMIN')">
-    <form th:method="GET" th:action="@{/cGroceries/{id}/edit(id=${contract.getContractId()})}">
+    <form th:method="GET" th:action="@{/contractGroceries/{id}/new(id=${contract.getContractId()})}">
         <button class="btn btn-success rounded-pill px-3" type="submit">
             <ya-tr-span data-index="1-2" data-translated="true" data-source-lang="en" data-target-lang="ru"
                         data-value="Success" data-translation="Успех" data-ch="0" data-type="trSpan"
@@ -84,8 +84,8 @@
         <tbody>
         <tr th:each="product: ${contractGroceries}">
             <td th:href="@{/groceries/{id}(id=${product.getContract().getContractId()})}"
-                th:text="${product.getProduct()}">User</td>
-            <td th:text="${product.getMeasureUnit()}"/>
+                th:text="${product.getProduct().getProductName()}">User</td>
+            <td th:text="${product.getMeasureUnit().getMeasureUnitName()}"/>
             <td th:text="${product.getPrice()}"/>
             <td th:text="${product.getQuantityBudget()}"/>
             <td th:text="${product.getQuantityOffBudget()}"/>
