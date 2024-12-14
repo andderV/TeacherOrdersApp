@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
@@ -29,10 +30,13 @@
     </select>
     <label for="quantityB">Введите количество бюджет</label>
     <input type="text" th:field="*{quantityBudget}" id="quantityB">
-    <div style="color: red" th:if="${#fields.hasErrors('quantityBudget')}" th:errors="*{quantityBudget}">Name error</div>
+    <div style="color: red" th:if="${#fields.hasErrors('quantityBudget')}" th:errors="*{quantityBudget}">Name error
+    </div>
     <label for="quantityOB">Введите количество внебюджет</label>
     <input type="text" th:field="*{quantityOffBudget}" id="quantityOB">
-    <div style="color: red" th:if="${#fields.hasErrors('quantityOffBudget')}" th:errors="*{quantityOffBudget}">Name error</div>
+    <div style="color: red" th:if="${#fields.hasErrors('quantityOffBudget')}" th:errors="*{quantityOffBudget}">Name
+        error
+    </div>
     <label for="price">Введите цену</label>
     <input type="text" th:field="*{price}" id="price">
     <div style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price error</div>
@@ -41,36 +45,50 @@
 <div>
     <a th:href="@{/contracts/{id}(id=${contract.getContractId()})}">Вернуться к контракту</a>
 </div>
+<div>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Номер контракта</th>
+            <th>Название продукта</th>
+            <th>Единица измерения</th>
+            <th>Количество бюджет</th>
+            <th>Количество внебюджет</th>
+            <th>Цена</th>
+            <th>Сумма бюджет</th>
+            <th>Сумма внебюджет</th>
+            <!--        <th>Дополнительная информация</th>-->
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cGro:${fullListItem}">
+            <td><a href="#" th:href="@{/cGroceries/{id}(id=${cGro.getId()})}"
+                   th:text="${cGro.getContract().getContractName()}"/></td>
+            <td th:text="${cGro.getProduct().getProductName()}"/>
+            <td th:text="${cGro.getMeasureUnit().getMeasureUnitName()}"/>
+            <td th:text="${cGro.getQuantityBudget()}"/>
+            <td th:text="${cGro.getQuantityOffBudget()}"/>
+            <td th:text="${cGro.getPrice()}"/>
+            <td th:text="${cGro.getSumBudget()}"/>
+            <td th:text="${cGro.getSumOffBudget()}"/>
+            <td>
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                    <form th:method="DELETE" th:action="@{/contractGroceries/{id}(id=${cGro.getId()})}">
+                        <button class="btn btn-danger rounded-pill px-3" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-trash3" viewBox="0 0 16 16">
+                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </td>
+        </tr>
 
-<table class="table table-bordered table-striped">
-    <thead>
-    <tr>
-        <th>Номер контракта</th>
-        <th>Название продукта</th>
-        <th>Единица измерения</th>
-        <th>Количество бюджет</th>
-        <th>Количество внебюджет</th>
-        <th>Цена</th>
-        <th>Сумма бюджет</th>
-        <th>Сумма внебюджет</th>
-        <!--        <th>Дополнительная информация</th>-->
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="cGro:${fullListItem}">
-        <td><a href="#" th:href="@{/cGroceries/{id}(id=${cGro.getId()})}" th:text="${cGro.getContract().getContractName()}"/></td>
-        <td th:text="${cGro.getProduct().getProductName()}"/>
-        <td th:text="${cGro.getMeasureUnit().getMeasureUnitName()}"/>
-        <td th:text="${cGro.getQuantityBudget()}"/>
-        <td th:text="${cGro.getQuantityOffBudget()}"/>
-        <td th:text="${cGro.getPrice()}"/>
-        <td th:text="${cGro.getSumBudget()}"/>
-        <td th:text="${cGro.getSumOffBudget()}"/>
-    </tr>
+        </tbody>
 
-    </tbody>
-
-</table>
+    </table>
+</div>
 
 </body>
 </html>

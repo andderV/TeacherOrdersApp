@@ -15,8 +15,6 @@ import ru.andderv.order.TeacherOrdersApp.services.ContractsService;
 import ru.andderv.order.TeacherOrdersApp.services.GroceriesService;
 import ru.andderv.order.TeacherOrdersApp.services.MeasureUnitService;
 
-import java.math.BigDecimal;
-
 /**
  * @author andderV
  * @version 16.10.2024 7:35
@@ -93,6 +91,9 @@ public class ContractsGroceriesController {
                        Model model) {
         model.addAttribute("cGroceries", contractsGroceriesService.findById(cGroceriesId));
         int contractId = contractsGroceriesService.findById(cGroceriesId).getContract().getContractId();
+        System.out.println("contractId " + contractId);
+        System.out.println("contract from cGroceries " + contractsGroceriesService.findById(cGroceriesId)
+                .getContract().getContractName());
         model.addAttribute("contract", contractsService.findById(contractId));
         model.addAttribute("units", measureUnitService.findAll());
         model.addAttribute("groceries", groceriesService.findAll(true));
@@ -132,8 +133,10 @@ public class ContractsGroceriesController {
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id) {
-        int contractId = contractsGroceriesService.findById(id).getContract().getContractId();
+    public String delete(@PathVariable("id") Integer cGroceriesId) {
+        int contractId = contractsGroceriesService.findById(cGroceriesId).getContract().getContractId();
+        int id = contractsGroceriesService.findById(cGroceriesId).getId();
+
         contractsGroceriesService.delete(id);
         return "redirect:/contracts/" + contractId;
     }

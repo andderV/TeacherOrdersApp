@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.andderv.order.TeacherOrdersApp.models.Contracts;
 import ru.andderv.order.TeacherOrdersApp.models.ContractsGroceries;
 import ru.andderv.order.TeacherOrdersApp.models.Providers;
+import ru.andderv.order.TeacherOrdersApp.services.ContractsGroceriesService;
 import ru.andderv.order.TeacherOrdersApp.services.ContractsService;
 import ru.andderv.order.TeacherOrdersApp.services.ProvidersService;
 import ru.andderv.order.TeacherOrdersApp.util.ContractValidator;
@@ -26,12 +27,14 @@ public class ContractsControllers {
     private final ContractsService contractsService;
     private final ProvidersService providersService;
     private final ContractValidator contractValidator;
+    private final ContractsGroceriesService contractsGroceriesService;
 
     @Autowired
-    public ContractsControllers(ContractsService contractsService, ProvidersService providersService, ContractValidator contractValidator) {
+    public ContractsControllers(ContractsService contractsService, ProvidersService providersService, ContractValidator contractValidator, ContractsGroceriesService contractsGroceriesService) {
         this.contractsService = contractsService;
         this.providersService = providersService;
         this.contractValidator = contractValidator;
+        this.contractsGroceriesService = contractsGroceriesService;
     }
 
     @GetMapping
