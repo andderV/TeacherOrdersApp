@@ -104,10 +104,31 @@
                 </div>
             </td>
         </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>Общая сумма бюджет</th>
+            <th>Общая сумма внебюджет</th>
+            <th>Итого</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td th:text="${sumBudgetTotal}"></td>
+            <td th:text="${sumOffBudgetTotal}"></td>
+            <td th:text="${sumTotal}"></td>
+        </tr>
         </tbody>
     </table>
 
 </div>
+
 <!--<div sec:authorize="hasRole('ROLE_ADMIN')">-->
 <!--    <form th:method="GET" th:action="@{/contractGroceries/{id}/edit(id=${contract.getContractId()})}">-->
 

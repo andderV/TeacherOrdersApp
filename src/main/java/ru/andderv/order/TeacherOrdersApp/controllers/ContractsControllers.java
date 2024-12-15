@@ -46,9 +46,16 @@ public class ContractsControllers {
 
     @GetMapping("/{id}")
     public String show(Model model, @PathVariable("id") int id) {
+        Contracts contract = contractsService.findById(id);
         List<ContractsGroceries> contractsGroceries = contractsService.findById(id).getContractsGroceries();
         model.addAttribute("contract", contractsService.findById(id));
         model.addAttribute("contractGroceries", contractsGroceries);
+        Integer sumBudgetTotal = contractsGroceriesService.sumBudgetTotal(contract);
+        Integer sumOffBudgetTotal = contractsGroceriesService.sumOffBudgetTotal(contract);
+        Integer sumTotal = sumBudgetTotal + sumOffBudgetTotal;
+        model.addAttribute("sumBudgetTotal", sumBudgetTotal);
+        model.addAttribute("sumOffBudgetTotal", sumOffBudgetTotal);
+        model.addAttribute("sumTotal", sumTotal);
         return "contracts/show";
     }
 

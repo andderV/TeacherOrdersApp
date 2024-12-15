@@ -3,7 +3,10 @@ package ru.andderv.order.TeacherOrdersApp.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.andderv.order.TeacherOrdersApp.models.*;
+import ru.andderv.order.TeacherOrdersApp.models.Contracts;
+import ru.andderv.order.TeacherOrdersApp.models.ContractsGroceries;
+import ru.andderv.order.TeacherOrdersApp.models.Groceries;
+import ru.andderv.order.TeacherOrdersApp.models.MeasureUnit;
 import ru.andderv.order.TeacherOrdersApp.repositories.ContractsGroceriesRepository;
 
 import java.util.List;
@@ -44,6 +47,14 @@ public class ContractsGroceriesService {
 
     public List<ContractsGroceries> groceryUnitList(Groceries groceries, MeasureUnit measureUnit){
         return repository.findAllByProductAndMeasureUnit(groceries, measureUnit);
+    }
+
+    public Integer sumBudgetTotal(Contracts contracts){
+        return repository.sumBudgetTotal(contracts);
+    }
+
+    public Integer sumOffBudgetTotal(Contracts contracts) {
+        return repository.sumOffBudgetTotal(contracts);
     }
 
 
