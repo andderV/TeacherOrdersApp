@@ -9,6 +9,7 @@ import ru.andderv.order.TeacherOrdersApp.models.Groceries;
 import ru.andderv.order.TeacherOrdersApp.models.MeasureUnit;
 import ru.andderv.order.TeacherOrdersApp.repositories.ContractsGroceriesRepository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -49,11 +50,11 @@ public class ContractsGroceriesService {
         return repository.findAllByProductAndMeasureUnit(groceries, measureUnit);
     }
 
-    public Integer sumBudgetTotal(Contracts contracts){
+    public BigDecimal sumBudgetTotal(Contracts contracts){
         return repository.sumBudgetTotal(contracts);
     }
 
-    public Integer sumOffBudgetTotal(Contracts contracts) {
+    public BigDecimal sumOffBudgetTotal(Contracts contracts) {
         return repository.sumOffBudgetTotal(contracts);
     }
 

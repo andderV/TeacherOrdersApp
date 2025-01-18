@@ -40,6 +40,11 @@ public class MeasureUnitService {
         return measureUnitRepository.findById(id).orElse(null);
     }
 
+    public List<MeasureUnit> findMeasureUnitsByProductId(int productId) {
+        return measureUnitRepository.findMeasureUnitsByGroceriesId(productId).orElse(Collections.emptyList());
+    }
+
+
     @Transactional
     public void save(MeasureUnit newUnit) {
         measureUnitRepository.save(newUnit);
@@ -69,9 +74,9 @@ public class MeasureUnitService {
         }
     }
 
-    public Set<MeasureUnit> findMeasureUnitsByGroceriesId(Integer groceriesId) {
-        Optional<Set<MeasureUnit>> set = measureUnitRepository.findMeasureUnitsByGroceriesId(groceriesId);
-        return set.orElse(null);
+    public List<MeasureUnit> findMeasureUnitsByGroceriesId(Integer groceriesId) {
+        Optional<List<MeasureUnit>> list = measureUnitRepository.findMeasureUnitsByGroceriesId(groceriesId);
+        return list.orElse(null);
     }
 
     public MeasureUnit findMeasureUnitByGroupIdAndRatioIs(int groupId, float ratio) {

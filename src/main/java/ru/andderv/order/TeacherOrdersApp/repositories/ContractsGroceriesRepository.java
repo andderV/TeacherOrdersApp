@@ -8,6 +8,7 @@ import ru.andderv.order.TeacherOrdersApp.models.ContractsGroceries;
 import ru.andderv.order.TeacherOrdersApp.models.Groceries;
 import ru.andderv.order.TeacherOrdersApp.models.MeasureUnit;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -22,9 +23,9 @@ public interface ContractsGroceriesRepository extends JpaRepository<ContractsGro
     List<ContractsGroceries> findByProduct(Groceries groceries);
     List<ContractsGroceries> findByMeasureUnit(MeasureUnit measureUnit);
     @Query("SELECT SUM(c.sumBudget) FROM ContractsGroceries c WHERE c.contract = :contract GROUP BY c.contract")
-    Integer sumBudgetTotal(Contracts contract);
+    BigDecimal sumBudgetTotal(Contracts contract);
 
     @Query("SELECT SUM(c.sumOffBudget) FROM ContractsGroceries c WHERE c.contract = :contract GROUP BY c.contract")
-    Integer sumOffBudgetTotal(Contracts contract);
+    BigDecimal sumOffBudgetTotal(Contracts contract);
 
 }

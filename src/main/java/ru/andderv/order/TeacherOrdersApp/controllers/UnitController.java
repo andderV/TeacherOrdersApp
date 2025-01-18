@@ -12,6 +12,9 @@ import ru.andderv.order.TeacherOrdersApp.services.GroupOfMUService;
 import ru.andderv.order.TeacherOrdersApp.services.MeasureUnitService;
 import ru.andderv.order.TeacherOrdersApp.util.UnitValidator;
 
+import java.util.List;
+import java.util.Set;
+
 /**
  * @author andderV
  * @date 29.10.2023 19:12
@@ -44,6 +47,13 @@ public class UnitController {
         model.addAttribute("unit", unitService.findById(id));
         model.addAttribute("groceries", unitService.findById(id).getGroceries());
         return "unit/show";
+    }
+
+    @GetMapping(value = "/loadUnits")
+    public @ResponseBody
+    List<MeasureUnit> loadUnits(@RequestParam(value = "id", required = true) Integer productId) {
+        //Specify the returning object you want here
+        return unitService.findMeasureUnitsByProductId(productId);
     }
 
     @GetMapping("/new")

@@ -1,6 +1,7 @@
 package ru.andderv.order.TeacherOrdersApp.controllers;
 
 import jakarta.validation.Valid;
+import org.springframework.boot.actuate.web.exchanges.HttpExchange;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -68,6 +69,7 @@ public class ContractsGroceriesController {
                          Model model) {
         model.addAttribute("fullListItem", contractsGroceriesService
                 .groceryItemList(contractsService.findById(contract.getContractId())));
+
 
         if (bindingResult.hasErrors()) {
             return "cGroceries/new";

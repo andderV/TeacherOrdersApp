@@ -14,6 +14,7 @@ import ru.andderv.order.TeacherOrdersApp.services.ContractsService;
 import ru.andderv.order.TeacherOrdersApp.services.ProvidersService;
 import ru.andderv.order.TeacherOrdersApp.util.ContractValidator;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -50,9 +51,9 @@ public class ContractsControllers {
         List<ContractsGroceries> contractsGroceries = contractsService.findById(id).getContractsGroceries();
         model.addAttribute("contract", contractsService.findById(id));
         model.addAttribute("contractGroceries", contractsGroceries);
-        Integer sumBudgetTotal = contractsGroceriesService.sumBudgetTotal(contract);
-        Integer sumOffBudgetTotal = contractsGroceriesService.sumOffBudgetTotal(contract);
-        Integer sumTotal = sumBudgetTotal + sumOffBudgetTotal;
+        BigDecimal sumBudgetTotal = contractsGroceriesService.sumBudgetTotal(contract);
+        BigDecimal sumOffBudgetTotal = contractsGroceriesService.sumOffBudgetTotal(contract);
+        BigDecimal sumTotal = sumBudgetTotal.add(sumOffBudgetTotal);
         model.addAttribute("sumBudgetTotal", sumBudgetTotal);
         model.addAttribute("sumOffBudgetTotal", sumOffBudgetTotal);
         model.addAttribute("sumTotal", sumTotal);

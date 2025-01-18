@@ -1,5 +1,6 @@
 package ru.andderv.order.TeacherOrdersApp.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -37,18 +38,22 @@ public class MeasureUnit {
     @Column(name = "ratio")
     private float ratio;
 
+    @JsonIgnore
     @ManyToOne()
     @JoinColumn(name = "group_id", referencedColumnName = "group_id")
     private GroupOfMU group;
 
+    @JsonIgnore
     @ToString.Exclude
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "measureUnits", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Groceries> groceries = new ArrayList<>();
 
+    @JsonIgnore
     @ToString.Exclude
     @OneToMany(mappedBy = "measureUnit", cascade = CascadeType.ALL)
     private List<GroceriesMeasureUnit>groceriesMeasureUnitList;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "measureUnit", cascade = CascadeType.ALL)
     private List<ContractsGroceries> contractsGroceries;
 
