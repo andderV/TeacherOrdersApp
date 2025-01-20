@@ -44,6 +44,7 @@
     </select>
     <label for="grocery">Выберите продукт:</label>
     <select th:object="${product}" th:field="*{id}" id="grocery">Выберите продукт
+        <option th:value="${product.id}">Выберите продукт</option>
         <option th:each="grocery:${groceries}" th:value="${grocery.id}"
                 th:text="${grocery.productName}"></option>
     </select>
@@ -52,11 +53,10 @@
 <!--        <option th:each="un:${units}" th:value="${un.measureUnitId}"-->
 <!--                th:text="${un.measureUnitName}"></option>-->
 <!--    </select>-->
-<!--    <label for="measureUnitId"></label><select id="measureUnitId">-->
-<!--            <option value="">Выберите единицу измерения</option>-->
-<!--        </select>-->
     <label for="measureUnit">Выберите единицу измерения:</label>
-    <select th:object="${unit}" th:field="*{measureUnitId}" id="measureUnit">Выберите единицу измерения</select>
+    <select th:object="${unit}" th:field="*{measureUnitId}" id="measureUnit">
+        <option th:value="${unit.measureUnitId}">Выберите ед.измерения</option>
+    </select>
     <label for="quantityB">Введите количество бюджет</label>
     <input type="text" th:field="*{quantityBudget}" id="quantityB">
     <div style="color: red" th:if="${#fields.hasErrors('quantityBudget')}" th:errors="*{quantityBudget}">Name error

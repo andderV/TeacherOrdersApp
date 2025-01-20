@@ -6,15 +6,15 @@
           rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
           crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function (){
+    <script type="text/javascript">
+        $(document).ready(function () {
             $('#grocery').change(
                 function () {
                     $.getJSON("http://localhost/units/loadUnits", {
                         id: $(this).val(),
                         ajax: 'true'
                     }, function (data) {
-                        var html = '<option value="">Выберите единицу измерения</option>';
+                        var html = "";
                         var len = data.length;
                         for (var i = 0; i < len; i++) {
                             html += '<option value="' + data[i].measureUnitId + '">'
@@ -41,19 +41,16 @@
     </select>
     <label for="grocery">Выберите продукт:</label>
     <select th:object="${product}" th:field="*{id}" id="grocery">
+        <option th:value="${product.id}">Выберите продукт</option>
         <option th:each="grocery:${groceries}" th:value="${grocery.id}"
-                th:text="${grocery.productName}"></option>
+                th:text="${grocery.productName}">Выберите продукт</option>
     </select>
-        <label for="measureUnit">Выберите единицу измерения:</label>
-    <select th:object="${unit}" th:field="*{measureUnitId}" id="measureUnit"></select>
-<!--            <option th:each="un:${units}" th:value="${un.measureUnitId}"-->
-<!--                    th:text="${un.measureUnitName}"></option>-->
-        <!--    </select>-->
-<!--        <label for="measureUnitId"></label>-->
-<!--        <select id="measureUnit">-->
-<!--                <option value="">Выберите единицу измерения</option>-->
-<!--            </select>-->
-<!--    <select name="measureUnit" id="measureUnit" disabled="disabled">&#45;&#45;units&#45;&#45;</select>-->
+    <label for="measureUnit">Выберите единицу измерения:</label>
+    <select th:object="${unit}" th:field="*{measureUnitId}" id="measureUnit">
+        <option th:value="${unit.measureUnitId}">Выберите ед.измерения</option>
+    </select>
+    <!--            <option th:each="un:${units}" th:value="${un.measureUnitId}"-->
+    <!--                    th:text="${un.measureUnitName}"></option>-->
     <label for="quantityB">Введите количество бюджет</label>
     <input type="text" th:field="*{quantityBudget}" id="quantityB">
     <div style="color: red" th:if="${#fields.hasErrors('quantityBudget')}" th:errors="*{quantityBudget}">Name error
