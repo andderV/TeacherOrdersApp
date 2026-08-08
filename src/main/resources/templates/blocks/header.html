@@ -10,27 +10,31 @@
             </svg>
             <span class="fs-4">Сервис для заказа продуктов</span>
         </a>
-<!--<div sec:authorize="hasRole('ROLE_ADMIN')">-->
+        <!--<div sec:authorize="hasRole('ROLE_ADMIN')">-->
         <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto" sec:authorize="hasRole('ROLE_ADMIN')">
-            <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/providers">Поставщики</a>
-            <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/contracts">Контракты</a>
-            <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/teachers">Преподаватели</a>
-            <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/groceries">Продукты</a>
-            <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/units">Единицы измерения</a>
-            <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/groups">Группы</a>
-            <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/orders">Заказы</a>
-            <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/item/report/grocery">Отчет</a>
-            <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/admin">Администрирование</a>
+                        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/providers">Поставщики</a>
+                        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/contracts">Контракты</a>
+                        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/teachers">Преподаватели</a>
+                        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/groceries">Продукты</a>
+                        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/units">Единицы измерения</a>
+                        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/groups">Группы</a>
+                        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/orders">Заказы</a>
+                        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/orderToSupGrocery/generalOrder/grocery">Заказы поставщику</a>
+                        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/item/report/grocery">Отчет</a>
+                        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/admin">Администрирование</a>
             <form th:action="@{/logout}" th:method="POST">
-                <button type="submit" class="me-3 py-2 link-body-emphasis text-decoration-none">Выход</button></form>
+                <button type="submit" class="me-3 py-2 link-body-emphasis text-decoration-none">Выход</button>
+            </form>
         </nav>
-<!--</div>-->
-<!--        <div th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">-->
-            <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
-                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/orders">Заказы</a>
-                <form th:action="@{/logout}" th:method="POST">
-                    <button type="submit" class="me-3 py-2 link-body-emphasis text-decoration-none">Выход</button></form>
-            </nav>
-<!--        </div>-->
+        <!--</div>-->
+        <!--        <div th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">-->
+        <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto"
+             th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
+            <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/orders">Заказы</a>
+            <form th:action="@{/logout}" th:method="POST">
+                <button type="submit" class="me-3 py-2 link-body-emphasis text-decoration-none">Выход</button>
+            </form>
+        </nav>
+        <!--        </div>-->
     </div>
 </div>

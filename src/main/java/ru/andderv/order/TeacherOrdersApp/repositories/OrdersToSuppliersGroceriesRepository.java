@@ -2,7 +2,10 @@ package ru.andderv.order.TeacherOrdersApp.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import ru.andderv.order.TeacherOrdersApp.models.OrdersToSupplier;
 import ru.andderv.order.TeacherOrdersApp.models.OrdersToSuppliersGrocery;
+
+import java.util.List;
 
 /**
  * @author andderV
@@ -11,4 +14,5 @@ import ru.andderv.order.TeacherOrdersApp.models.OrdersToSuppliersGrocery;
  */
 @Repository
 public interface OrdersToSuppliersGroceriesRepository extends JpaRepository<OrdersToSuppliersGrocery, Integer> {
+    List<OrdersToSuppliersGrocery> findByOrder(OrdersToSupplier orders);
 }

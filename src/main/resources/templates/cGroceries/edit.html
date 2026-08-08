@@ -8,28 +8,7 @@
           rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
           crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function (){
-            $('#grocery').change(
-                function () {
-                    $.getJSON("http://localhost/units/loadUnits", {
-                        id: $(this).val(),
-                        ajax: 'true'
-                    }, function (data) {
-                        var html = '<option value="">Выберите единицу измерения</option>';
-                        var len = data.length;
-                        for (var i = 0; i < len; i++) {
-                            html += '<option value="' + data[i].measureUnitId + '">'
-                                + data[i].measureUnitName + '</option>';
-                        }
-                        html += '</option>';
-                        $('#measureUnit').html(html);
-                    });
-                });
-        });
-
-    </script>
-
+    <script src="/dropDownUnitsList.js" type="text/javascript"></script>
     <title>Новый заказ</title>
 </head>
 
@@ -48,11 +27,6 @@
         <option th:each="grocery:${groceries}" th:value="${grocery.id}"
                 th:text="${grocery.productName}"></option>
     </select>
-<!--    <label for="unit">Выберите единицу измерения:</label>-->
-<!--    <select th:object="${unit}" th:field="*{measureUnitId}" id="unit">-->
-<!--        <option th:each="un:${units}" th:value="${un.measureUnitId}"-->
-<!--                th:text="${un.measureUnitName}"></option>-->
-<!--    </select>-->
     <label for="measureUnit">Выберите единицу измерения:</label>
     <select th:object="${unit}" th:field="*{measureUnitId}" id="measureUnit">
         <option th:value="${unit.measureUnitId}">Выберите ед.измерения</option>
@@ -91,7 +65,7 @@
         </thead>
         <tbody>
         <tr th:each="cGro:${fullListItem}">
-            <td><a href="#" th:href="@{/cGroceries/{id}(id=${cGro.getId()})}"
+            <td><a href="#" th:href="@{/contracts/{id}(id=${cGro.contract.getContractId()})}"
                    th:text="${cGro.getContract().getContractName()}"/></td>
             <td th:text="${cGro.getProduct().getProductName()}"/>
             <td th:text="${cGro.getMeasureUnit().getMeasureUnitName()}"/>

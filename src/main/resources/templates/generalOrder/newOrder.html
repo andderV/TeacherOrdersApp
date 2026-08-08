@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
+    <title>Все продукты</title>
+</head>
+<body>
+<header th:replace="blocks/header :: header"></header>
+
+
+
+<<form th:method="POST" th:action="@{/generalOrder/grocery}" th:object="${emptyOrderToSupGro}">
+    <label for="date">Выберите дату: </label>
+    <input type="date" th:field="*{order.dateOrder}" id="date">
+    <div style="color: red" th:if="${#fields.hasErrors('dateOrder')}" th:errors="*{order.dateOrder}">Date error</div>
+    <br/>
+    <label for="product">Выберите продукт:</label>
+    <select th:object="${emptyOrderToSupGro}" th:field="*{product.getId()}" id="product">
+        <option th:each="product: ${getAllGroceries}" th:value="${product.getId()}"
+                th:text="${product.product.getProductName()}">
+        </option>
+    </select>
+    <hr>
+    <br>
+    <br>
+
+    <h3>Список заказанных продуктов
+        <!--    <span th:if="${!productResult.isEmpty()}">-->
+        <!--    <span th:text="'c ' + ${#dates.format(result.start, 'dd MMMM')} + ' по ' + ${#dates.format(result.end, 'dd MMMM')}">с-->
+        <!--    </span>-->
+        <!--</span>-->
+    </h3>
+
+    <!--<table class="table table-bordered table-striped">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>Название продукта</th>-->
+<!--        <th>Количество</th>-->
+<!--        <th>Единица измерения</th>-->
+<!--        &lt;!&ndash;        <th>Дополнительная информация</th>&ndash;&gt;-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr th:each="product:${productResult}">-->
+<!--        <td><a th:href="@{/groceries/{id}(id=${product.groceryId})}" th:text="${product.productName}"/>-->
+<!--        <td th:text="${product.quantity}"/>-->
+<!--        <td th:text="${product.measureUnitName}"/>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+
+<!--</table>-->
+
+<br/>
+</body>
+</html>

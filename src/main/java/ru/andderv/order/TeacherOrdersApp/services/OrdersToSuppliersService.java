@@ -1,6 +1,7 @@
 package ru.andderv.order.TeacherOrdersApp.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.andderv.order.TeacherOrdersApp.models.OrdersToSupplier;
@@ -45,5 +46,13 @@ public class OrdersToSuppliersService {
     @Transactional
     public void delete(int id) {
         ordersToSuppliersRepository.deleteById(id);
+    }
+
+    public List<OrdersToSupplier> findAllWithSorting(Boolean sort) {
+        if (sort) {
+            return ordersToSuppliersRepository.findAll(Sort.by("dateOrder").descending());
+        } else {
+            return ordersToSuppliersRepository.findAll();
+        }
     }
 }

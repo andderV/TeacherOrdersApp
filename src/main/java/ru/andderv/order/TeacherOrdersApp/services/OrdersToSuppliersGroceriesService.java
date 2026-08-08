@@ -3,6 +3,7 @@ package ru.andderv.order.TeacherOrdersApp.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.andderv.order.TeacherOrdersApp.models.OrdersToSupplier;
 import ru.andderv.order.TeacherOrdersApp.models.OrdersToSuppliersGrocery;
 import ru.andderv.order.TeacherOrdersApp.repositories.OrdersToSuppliersGroceriesRepository;
 
@@ -31,6 +32,10 @@ public class OrdersToSuppliersGroceriesService {
         return ordersToSuppliersGroceriesRepository.findById(id).orElse(null);
     }
 
+    public List<OrdersToSuppliersGrocery> groceryList(OrdersToSupplier orders) {
+        return ordersToSuppliersGroceriesRepository.findByOrder(orders);
+    }
+
     @Transactional
     public void save(OrdersToSuppliersGrocery ordersToSuppliersGrocery) {
         ordersToSuppliersGroceriesRepository.save(ordersToSuppliersGrocery);
@@ -46,4 +51,5 @@ public class OrdersToSuppliersGroceriesService {
     public void delete(int id) {
         ordersToSuppliersGroceriesRepository.deleteById(id);
     }
+
 }

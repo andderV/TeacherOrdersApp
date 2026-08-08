@@ -1,6 +1,7 @@
 package ru.andderv.order.TeacherOrdersApp.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.andderv.order.TeacherOrdersApp.models.Contracts;
@@ -26,31 +27,36 @@ public class ContractsGroceriesService {
     public ContractsGroceriesService(ContractsGroceriesRepository repository) {
         this.repository = repository;
     }
-    public List<ContractsGroceries> findAll() {
-        return repository.findAll();
+
+    public List<ContractsGroceries> findAll(boolean sortByProductName) {
+        if (sortByProductName) {
+            return repository.findAll(Sort.by("productName"));
+        } else {
+            return repository.findAll();
+        }
     }
 
     public ContractsGroceries findById(int id) {
         return repository.findById(id).orElse(null);
     }
 
-    public List<ContractsGroceries> groceryItemList(Contracts contracts){
+    public List<ContractsGroceries> groceryItemList(Contracts contracts) {
         return repository.findByContract(contracts);
     }
 
-    public List<ContractsGroceries> groceriesList(Groceries groceries){
+    public List<ContractsGroceries> groceriesList(Groceries groceries) {
         return repository.findByProduct(groceries);
     }
 
-    public List<ContractsGroceries> unitList(MeasureUnit measureUnit){
+    public List<ContractsGroceries> unitList(MeasureUnit measureUnit) {
         return repository.findByMeasureUnit(measureUnit);
     }
 
-    public List<ContractsGroceries> groceryUnitList(Groceries groceries, MeasureUnit measureUnit){
+    public List<ContractsGroceries> groceryUnitList(Groceries groceries, MeasureUnit measureUnit) {
         return repository.findAllByProductAndMeasureUnit(groceries, measureUnit);
     }
 
-    public BigDecimal sumBudgetTotal(Contracts contracts){
+    public BigDecimal sumBudgetTotal(Contracts contracts) {
         return repository.sumBudgetTotal(contracts);
     }
 

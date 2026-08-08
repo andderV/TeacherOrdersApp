@@ -22,6 +22,8 @@ import java.util.List;
  * @version 07.10.2024 6:35
  * TeacherOrdersApp
  */
+
+//TODO Проверить работу метода show
 @Controller
 @RequestMapping("/contracts")
 public class ContractsControllers {
@@ -48,20 +50,27 @@ public class ContractsControllers {
     @GetMapping("/{id}")
     public String show(Model model, @PathVariable("id") int id) {
         Contracts contract = contractsService.findById(id);
-        List<ContractsGroceries> contractsGroceries = contractsService.findById(id).getContractsGroceries();
-        model.addAttribute("contract", contractsService.findById(id));
+        List<ContractsGroceries> contractsGroceries = contract.getContractsGroceries();
+        model.addAttribute("contract", contract);
         model.addAttribute("contractGroceries", contractsGroceries);
         BigDecimal sumBudgetTotal = contractsGroceriesService.sumBudgetTotal(contract);
         BigDecimal sumOffBudgetTotal = contractsGroceriesService.sumOffBudgetTotal(contract);
-        BigDecimal sumTotal = sumBudgetTotal.add(sumOffBudgetTotal);
-        model.addAttribute("sumBudgetTotal", sumBudgetTotal);
-        model.addAttribute("sumOffBudgetTotal", sumOffBudgetTotal);
-        model.addAttribute("sumTotal", sumTotal);
+        if ((sumBudgetTotal != null) && (sumOffBudgetTotal != null)) {
+            BigDecimal sumTotal = sumBudgetTotal.add(sumOffBudgetTotal);
+            model.addAttribute("sumBudgetTotal", sumBudgetTotal);
+            model.addAttribute("sumOffBudgetTotal", sumOffBudgetTotal);
+            model.addAttribute("sumTotal", sumTotal);
+        } else {
+            model.addAttribute("sumBudgetTotal", null);
+            model.addAttribute("sumOffBudgetTotal", null);
+            model.addAttribute("sumTotal", null);
+        }
         return "contracts/show";
     }
 
     @GetMapping("/new")
-    public String newContract(@ModelAttribute("contract") Contracts contract, @ModelAttribute("provider") Providers provider,
+    public String newContract(@ModelAttribute("contract") Contracts contract,
+                              @ModelAttribute("provider") Providers provider,
                               Model model) {
         model.addAttribute("providers", providersService.findAll());
         return "contracts/new";
